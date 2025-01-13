@@ -31,11 +31,15 @@ fs
     db[model.name] = model;
   });
 
+db.User = require('./user')(sequelize,Sequelize.DataTypes)
+db.Question = require('./question')(sequelize,Sequelize.DataTypes)
+
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
 });
+
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
