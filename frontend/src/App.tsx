@@ -1,8 +1,11 @@
+import AddTeam from "./components/AddTeam";
+import Home from "./components/Home";
+
 function App(){
   return (
     <div>
-      <h1>My App</h1>
-      <p>My App is running</p>
+     <Home/>
+     <AddTeam/>
     </div>
   )
 }
