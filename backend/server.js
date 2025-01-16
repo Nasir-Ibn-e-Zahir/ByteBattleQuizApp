@@ -3,7 +3,7 @@ const app = express();
 const port = 3000;
 const db = require('./models')
 
-app.get('/team/addteam',(req,res)=>{
+app.get('/',(req,res)=>{
     res.send('Welcome to Quiz App');
 })
 
