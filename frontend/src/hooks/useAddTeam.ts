@@ -4,7 +4,7 @@ import { z } from "zod";
 
 export const teamdata = z.object({
     team_name: z.string(),
-    team_desc: z.string()
+    description: z.string()
     
 })
 
