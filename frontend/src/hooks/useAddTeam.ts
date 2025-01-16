@@ -14,10 +14,9 @@ const useAddTeam = () => {
     
     return useMutation({
          mutationFn: async (data:teamAdditionData) => {
-            teamdata.parse(data);
 
-        const response = await axios.post("http://localhost:3000/api/team/add",data)
-        
+         teamdata.parse(data);
+        const response = await axios.post("http://localhost:3000/api/team/add",data)        
         return response;
          },
 
