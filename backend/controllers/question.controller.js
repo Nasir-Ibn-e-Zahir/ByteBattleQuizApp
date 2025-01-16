@@ -3,9 +3,9 @@ const db = require("../models")
 
 exports.createQuestion = async (req,res)=>{
     try{
+      console.log(req.body)
       const {question,option_a,option_b,option_c,option_d,correct_option} = req.body
-
-    await db.create({
+    await db.Question.create({
         question,option_a,option_b,option_c,option_d,correct_option
     })
     res.status(200).json({message:"Question inserted successfully..!"})
