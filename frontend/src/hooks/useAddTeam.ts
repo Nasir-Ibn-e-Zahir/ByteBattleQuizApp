@@ -16,9 +16,9 @@ const useAddTeam = () => {
          mutationFn: async (data:teamAdditionData) => {
             teamdata.parse(data);
 
-        const response = await axios.post("http://localhost:3000/team/addteam",data)
-        console.log(response.data)
-        return response.data;
+        const response = await axios.post("http://localhost:3000/api/team/add",data)
+        
+        return response;
          },
 
         onSuccess:(response)=>{

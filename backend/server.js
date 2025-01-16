@@ -5,7 +5,9 @@ const db = require('./models')
 const teamRouter = require("./routes/team.route")
 const questionRouter = require('./routes/question.route')
 const bodyParser = require('body-parser');
+const cors = require('cors')
 
+app.use(cors())
 
 app.get('/',(req,res)=>{
     res.send('Welcome to Quiz App');
