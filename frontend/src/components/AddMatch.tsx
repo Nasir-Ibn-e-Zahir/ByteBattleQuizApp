@@ -1,12 +1,13 @@
 import { FormControl, FormLabel } from '@chakra-ui/form-control';
 import { Box, Button, Heading } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
-import { matchDataFormat } from '../hooks/useAddMatch';
+import useAddMatch, { matchDataFormat } from '../hooks/useAddMatch';
 
 export const AddMatch = () => {
     const {handleSubmit,register} = useForm<matchDataFormat>()
+    const {mutate} = useAddMatch()
     const submit = (data: matchDataFormat) => {
-        console.log("Form are submitted",data)
+        mutate(data)
     }
   return (
     <Box paddingX={"400px"} textAlign="center">
