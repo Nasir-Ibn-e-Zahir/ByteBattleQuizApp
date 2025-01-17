@@ -4,6 +4,7 @@ const port = 3000;
 const db = require('./models')
 const teamRouter = require("./routes/team.route")
 const questionRouter = require('./routes/question.route')
+const matchRouter = require('./routes/match.route')
 const bodyParser = require('body-parser');
 const cors = require('cors')
 
@@ -22,6 +23,7 @@ app.use(express.urlencoded({ extended: false }))
 
 
 app.use("/api/team", teamRouter)
+app.use("/api/match",matchRouter )
 app.use("/api/question",questionRouter)
 db.sequelize.sync().then(() => {
 

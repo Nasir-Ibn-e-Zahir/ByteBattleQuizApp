@@ -13,7 +13,7 @@ const useAddMatch = () => {
     return useMutation({
         mutationFn: async (data: matchDataFormat)=>{
             matchData.parse(data)
-            const response = await axios.post("http://localhost:3000/api/question/add",data)
+            const response = await axios.post("http://localhost:3000/api/match/add",data)
             return response;
     },
     onSuccess:(response)=>{
