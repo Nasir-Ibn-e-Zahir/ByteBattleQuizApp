@@ -1,9 +1,10 @@
+import AddMatch from "./AddMatch";
 
 const Home = () => {
-  return (
-    <div>
-      Welcome to the Byte Battle Quiz App!
-    </div>
+  return (<>
+    <AddMatch />
+  </>
+    
   )
 }
 

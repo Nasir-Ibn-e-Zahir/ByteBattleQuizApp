@@ -1,5 +1,5 @@
 import AddQuestion from "./components/AddQuestion";
-// import AddTeam from "./components/AddTeam";
+import AddTeam from "./components/AddTeam";
 import Home from "./components/Home";
 
 function App(){
@@ -7,7 +7,7 @@ function App(){
     <div>
      <Home/>
      {/* <AddTeam/> */}
-     <AddQuestion/>
+     {/* <AddQuestion/> */}
     </div>
   )
 }
