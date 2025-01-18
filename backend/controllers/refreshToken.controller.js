@@ -7,16 +7,16 @@ const { where } = require("sequelize");
 
 const handleRefreshToken = async (req, res) => {
     const cookies = req.cookies;
-    if (!cookies.jwt) return res.status(401);
+    if (!cookies?.jwt_refresh_token) return res.status(401);
 
-    const refreshToken = cookies.jwt;
+    const refreshToken = cookies.jwt_refresh_token;
 
     const founUser = await db.User.findOne({
         where: { refresh_token: refreshToken },
     });
 
-    if (!founUser) return res.status(403);
     console.log(founUser.username);
+    if (!founUser) return res.status(403);
 
     jwt.verify(
         refreshToken,

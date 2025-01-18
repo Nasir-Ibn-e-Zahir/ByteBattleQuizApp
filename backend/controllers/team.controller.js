@@ -15,3 +15,12 @@ exports.createTeam = async (req, res) => {
         res.status(500).json({ error: error.message })
     }
 }
+
+exports.getAllTeams = async (req, res) => {
+    try {
+        const teams = await db.Team.findAndCountAll({})
+        res.status(200).json({ allTeams: teams.rows })
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch teams" })
+    }
+}

@@ -30,10 +30,7 @@ const handleLogin = async (req, res) => {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
         });
-        res.cookie("jwt_token", refreshToken, {
-            httpOnly: true,
-            maxAge: 24 * 60 * 60 * 1000,
-        });
+
 
         res.status(201).json({ message: "Login successful.", accessToken });
     } catch (error) {

@@ -3,26 +3,29 @@ import axios from "axios";
 import { z } from "zod";
 
 export const matchData = z.object({
-    match_name: z.string(),
-    match_type: z.string(),
-})
+  match_name: z.string(),
+  match_type: z.string(),
+});
 
-export type matchDataFormat = z.infer<typeof matchData>
+export type matchDataFormat = z.infer<typeof matchData>;
 
 const useAddMatch = () => {
-    return useMutation({
-        mutationFn: async (data: matchDataFormat)=>{
-            matchData.parse(data)
-            const response = await axios.post("http://localhost:3000/api/match/add",data)
-            return response;
+  return useMutation({
+    mutationFn: async (data: matchDataFormat) => {
+      matchData.parse(data);
+      const response = await axios.post(
+        "http://localhost:3000/api/match/add",
+        data
+      );
+      return response;
     },
-    onSuccess:(response)=>{
-        console.log("Team Inserted Successfully",response.data)
+    onSuccess: (response) => {
+      console.log("Team Inserted Successfully", response.data);
     },
-    onError:(e)=>{
-        console.log("Some error occurred durig team insertion",e)
-    }
-})
-}
+    onError: (e) => {
+      console.log("Some error occurred durig team insertion", e);
+    },
+  });
+};
 
 export default useAddMatch;
