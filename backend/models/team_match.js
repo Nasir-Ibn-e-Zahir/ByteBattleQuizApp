@@ -13,7 +13,7 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "Teams", // Ensure this matches the actual table name or model name
+          model: "Teams",
           key: "id",
         },
         onDelete: "CASCADE",
@@ -23,7 +23,7 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "Matches", // Ensure this matches the actual table name or model name
+          model: "Matches",
           key: "id",
         },
         onDelete: "CASCADE",
@@ -31,12 +31,12 @@ module.exports = (sequelize) => {
       },
       score: {
         type: DataTypes.INTEGER,
-        defaultValue: 0, // Optional: set a default score
+        defaultValue: 0,
       },
     },
     {
       tableName: "Team_Matches",
-      timestamps: true, // Adds createdAt and updatedAt columns
+      timestamps: true,
     }
   );
 
