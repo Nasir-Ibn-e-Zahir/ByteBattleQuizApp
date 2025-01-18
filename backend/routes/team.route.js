@@ -4,5 +4,6 @@ const teamController = require("../controllers/team.controller")
 
 router.post("/add", teamController.createTeam)
 router.get("/all_teams", teamController.getAllTeams)
+router.delete("/:id", teamController.destroyTeam)
 
 module.exports = router;

@@ -1,4 +1,4 @@
-const { where } = require("sequelize");
+const { where, json } = require("sequelize");
 const db = require("../models");
 
 exports.createMatch = async (req, res) => {
@@ -30,5 +30,31 @@ exports.createMatch = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Some error occurred while adding the match" })
+    }
+}
+
+exports.destroyMatch = async (req, res) => {
+    const matchId = req.params.id;
+
+    try {
+        const match = await db.Match.findByPk(matchId)
+
+        if (match) {
+            await db.Team_Match.destroy({
+                where: {
+                    match_id: matchId
+                }
+            })
+
+            await match.destroy();
+            res.status(200).json({ message: "Match deleted successfully." })
+        } else {
+            res.status(404).json({ error: "Match not found." })
+        }
+
+    } catch (error) {
+        console.error(`Failed to delete match with id ${matchId}. `)
+        res.status(500).json({ error: "Failed to delete match." })
+
     }
 }

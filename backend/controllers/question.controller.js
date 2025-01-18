@@ -1,3 +1,4 @@
+const { where } = require("sequelize")
 const db = require("../models")
 
 exports.createQuestion = async (req, res) => {
@@ -21,4 +22,32 @@ exports.getAllQuestions = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch all questions from database." })
   }
+}
+
+
+exports.destroyQuestion = async (req, res) => {
+  const questionId = req.params.id;
+
+  try {
+    const question = await db.Question.findByPk(questionId);
+
+    if (question) {
+      await question.destroy({
+        where: {
+          id: questionId
+        }
+      })
+
+      res.status(200).json({ message: "Question deleted successfully." })
+    } else {
+      res.status(404).json({ message: "Question not find." })
+    }
+
+  } catch (error) {
+    console.error("Failed to delete question.")
+
+    res.status(500).json({ error: "Failed to delete question." })
+  }
+
+
 }
