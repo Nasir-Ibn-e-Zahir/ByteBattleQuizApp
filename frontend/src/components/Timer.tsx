@@ -26,8 +26,10 @@ function Timer() {
   const circlePerimeter = 2 * Math.PI * circleRadius;
   const strokeDashoffset = circlePerimeter - (time / 10) * circlePerimeter;
 
-  // Dynamically calculate font size based on time
-  const fontSize = 80 + (10 - time) * 8; // Even larger font size change
+  // Dynamically calculate font size based on time (grow the font as time decreases)
+  const minFontSize = 70;
+  const maxFontSize = 150; // Increase the max font size to make it much larger
+  const fontSize = Math.max(minFontSize, maxFontSize - (10 - time) * 10); // Adjust the formula for a larger font size
 
   return (
     <div style={{ textAlign: "center", margin: "2rem" }}>
@@ -64,32 +66,18 @@ function Timer() {
           y="50%"
           textAnchor="middle"
           dominantBaseline="middle"
-          fontSize={fontSize}
+          fontSize={fontSize} // Dynamically calculated font size
           fontWeight="bolder"
           fill="#333"
           fontFamily="'Orbitron', sans-serif"
           style={{
-            textShadow: "0px 0px 15px rgba(0, 0, 0, 0.5)", // Added shadow for depth
+            textShadow: "0px 0px 20px rgba(0, 0, 0, 0.7)", // Larger shadow for better visibility
             transition: "font-size 0.3s ease, fill 0.3s ease", // Smooth transition effects
           }}
         >
           {time}
         </text>
       </svg>
-
-      {/* Timer Display */}
-      <div
-        style={{
-          fontSize: "48px",
-          marginTop: "1rem",
-          fontWeight: "bold",
-          color: "#333",
-          textTransform: "uppercase",
-          letterSpacing: "2px",
-        }}
-      >
-        {/* The timer value is already shown inside the circle */}
-      </div>
 
       {/* Buttons */}
       <div style={{ marginTop: "1rem" }}>
