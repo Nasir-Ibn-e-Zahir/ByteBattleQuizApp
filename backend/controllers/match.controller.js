@@ -65,4 +65,4 @@ exports.destroyMatch = async (req, res) => {
         console.error(`Failed to delete match with id ${matchId}:`, error);
         return res.status(500).json({ error: "Failed to delete match." });
     }
-};
+}
