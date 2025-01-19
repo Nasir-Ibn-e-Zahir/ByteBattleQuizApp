@@ -1,53 +1,57 @@
-const { where } = require("sequelize")
-const db = require("../models")
+const db = require("../models");
 
 exports.createQuestion = async (req, res) => {
   try {
-    console.log(req.body)
-    const { question, option_a, option_b, option_c, option_d, correct_option } = req.body
+    const { question, option_a, option_b, option_c, option_d, correct_option } = req.body;
+    
+    // Validate the incoming data
+    if (!question || !option_a || !option_b || !option_c || !option_d || !correct_option) {
+      return res.status(400).json({ message: "All fields are required." });
+    }
+    
+    // Insert the new question into the database
     await db.Question.create({
-      question, option_a, option_b, option_c, option_d, correct_option
-    })
-    res.status(200).json({ message: "Question inserted successfully..!" })
-  } catch (e) {
-    console.log("Some error occurred during question insertion...", e)
-    res.status(400).json({ message: "Question is not inserted successfully...!" })
+      question,
+      option_a,
+      option_b,
+      option_c,
+      option_d,
+      correct_option
+    });
+    
+    res.status(201).json({ message: "Question inserted successfully!" });
+  } catch (error) {
+    console.error("Error during question insertion:", error);
+    res.status(500).json({ message: "Failed to insert question." });
   }
-}
+};
 
 exports.getAllQuestions = async (req, res) => {
   try {
-    const questions = await db.Question.findAndCountAll({})
-    res.status(200).json({ questions })
+    const { count, rows } = await db.Question.findAndCountAll({});
+    res.status(200).json({ count, questions: rows });
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch all questions from database." })
+    console.error("Error fetching questions:", error);
+    res.status(500).json({ error: "Failed to fetch all questions from the database." });
   }
-}
-
+};
 
 exports.destroyQuestion = async (req, res) => {
-  const questionId = req.params.id;
-
+  const { id } = req.params;
+  
   try {
-    const question = await db.Question.findByPk(questionId);
-
-    if (question) {
-      await question.destroy({
-        where: {
-          id: questionId
-        }
-      })
-
-      res.status(200).json({ message: "Question deleted successfully." })
-    } else {
-      res.status(404).json({ message: "Question not find." })
+    const question = await db.Question.findByPk(id);
+    
+    if (!question) {
+      return res.status(404).json({ message: "Question not found." });
     }
 
+    // Delete the question from the database
+    await question.destroy();
+    
+    res.status(200).json({ message: "Question deleted successfully." });
   } catch (error) {
-    console.error("Failed to delete question.")
-
-    res.status(500).json({ error: "Failed to delete question." })
+    console.error("Error during question deletion:", error);
+    res.status(500).json({ error: "Failed to delete question." });
   }
-
-
-}
+};
