@@ -26,12 +26,12 @@ const AddQuestion = () => {
             bg={bgColor}
             mt={12}
         >
-            <Heading as="h2" size="lg" textAlign="center" mb={4}>
+            <Heading as="h2" size="xl" textAlign="center" mb={4} fontWeight="bold">
                 Add a New Question
             </Heading>
-              <Text textAlign="center" color="gray.600"  ml={10} mr={5}>
-                 Please fill the following fields to create a new question in the Quiz.
-              </Text>
+            <Text textAlign="center" color="gray.600" ml={10} mr={5} mb={6}>
+                Please fill the following fields to create a new question in the Quiz.
+            </Text>
             <Box bg={formBg} p={6} borderRadius="md">
                 <form onSubmit={handleSubmit(submit)}>
                     <Stack spacing={5}>
@@ -40,8 +40,23 @@ const AddQuestion = () => {
                             <Input
                                 type="text"
                                 placeholder="e.g., Who is the president of the USA?"
-                                {...register("question", { required: "This field is required"  })}
-                                focusBorderColor="skyblue" // Sky-blue border on focus
+                                {...register("question", { required: "This field is required" })}
+                                bg="gray.50"
+                                borderRadius="md"
+                                border="2px solid"
+                                borderColor="gray.300"
+                                _hover={{
+                                    borderColor: "blue.400",
+                                }}
+                                _focus={{
+                                    outline: "none",
+                                    borderColor: "blue.500",
+                                    boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.5)",
+                                }}
+                                _placeholder={{
+                                    color: "gray.400",
+                                }}
+                                p={4}
                             />
                             <FormErrorMessage>{errors.question?.message}</FormErrorMessage>
                         </FormControl>
@@ -52,7 +67,22 @@ const AddQuestion = () => {
                                 type="text"
                                 placeholder="e.g., Joe Biden"
                                 {...register("option_a", { required: "Option A is required" })}
-                                focusBorderColor="skyblue" // Sky-blue border on focus
+                                bg="gray.50"
+                                borderRadius="md"
+                                border="2px solid"
+                                borderColor="gray.300"
+                                _hover={{
+                                    borderColor: "blue.400",
+                                }}
+                                _focus={{
+                                    outline: "none",
+                                    borderColor: "blue.500",
+                                    boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.5)",
+                                }}
+                                _placeholder={{
+                                    color: "gray.400",
+                                }}
+                                p={4}
                             />
                             <FormErrorMessage>{errors.option_a?.message}</FormErrorMessage>
                         </FormControl>
@@ -63,7 +93,22 @@ const AddQuestion = () => {
                                 type="text"
                                 placeholder="e.g., Donald Trump"
                                 {...register("option_b", { required: "Option B is required" })}
-                                focusBorderColor="skyblue" // Sky-blue border on focus
+                                bg="gray.50"
+                                borderRadius="md"
+                                border="2px solid"
+                                borderColor="gray.300"
+                                _hover={{
+                                    borderColor: "blue.400",
+                                }}
+                                _focus={{
+                                    outline: "none",
+                                    borderColor: "blue.500",
+                                    boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.5)",
+                                }}
+                                _placeholder={{
+                                    color: "gray.400",
+                                }}
+                                p={4}
                             />
                             <FormErrorMessage>{errors.option_b?.message}</FormErrorMessage>
                         </FormControl>
@@ -74,7 +119,22 @@ const AddQuestion = () => {
                                 type="text"
                                 placeholder="e.g., Barack Obama"
                                 {...register("option_c", { required: "Option C is required" })}
-                                focusBorderColor="skyblue" // Sky-blue border on focus
+                                bg="gray.50"
+                                borderRadius="md"
+                                border="2px solid"
+                                borderColor="gray.300"
+                                _hover={{
+                                    borderColor: "blue.400",
+                                }}
+                                _focus={{
+                                    outline: "none",
+                                    borderColor: "blue.500",
+                                    boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.5)",
+                                }}
+                                _placeholder={{
+                                    color: "gray.400",
+                                }}
+                                p={4}
                             />
                             <FormErrorMessage>{errors.option_c?.message}</FormErrorMessage>
                         </FormControl>
@@ -85,7 +145,22 @@ const AddQuestion = () => {
                                 type="text"
                                 placeholder="e.g., Kamala Harris"
                                 {...register("option_d", { required: "Option D is required" })}
-                                focusBorderColor="skyblue" // Sky-blue border on focus
+                                bg="gray.50"
+                                borderRadius="md"
+                                border="2px solid"
+                                borderColor="gray.300"
+                                _hover={{
+                                    borderColor: "blue.400",
+                                }}
+                                _focus={{
+                                    outline: "none",
+                                    borderColor: "blue.500",
+                                    boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.5)",
+                                }}
+                                _placeholder={{
+                                    color: "gray.400",
+                                }}
+                                p={4}
                             />
                             <FormErrorMessage>{errors.option_d?.message}</FormErrorMessage>
                         </FormControl>
@@ -96,7 +171,22 @@ const AddQuestion = () => {
                                 type="text"
                                 placeholder="e.g., A"
                                 {...register("correct_option", { required: "Correct option is required" })}
-                                focusBorderColor="skyblue" // Sky-blue border on focus
+                                bg="gray.50"
+                                borderRadius="md"
+                                border="2px solid"
+                                borderColor="gray.300"
+                                _hover={{
+                                    borderColor: "blue.400",
+                                }}
+                                _focus={{
+                                    outline: "none",
+                                    borderColor: "blue.500",
+                                    boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.5)",
+                                }}
+                                _placeholder={{
+                                    color: "gray.400",
+                                }}
+                                p={4}
                             />
                             <FormErrorMessage>{errors.correct_option?.message}</FormErrorMessage>
                         </FormControl>
@@ -106,7 +196,7 @@ const AddQuestion = () => {
                             size="lg"
                             type="submit"
                             _hover={{
-                                bg: "teal.600",
+                                bg: "blue.600", // Slightly darker blue on hover
                             }}
                             width="full"
                         >
