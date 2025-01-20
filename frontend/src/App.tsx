@@ -7,6 +7,8 @@ import Login from "./components/auth/Login";
 import LayOut from "./Layout";
 import AddMatch from "./components/AddMatch";
 import AddQuestion from "./components/AddQuestion";
+import Timer from "./components/Timer";
+import AddTeam from "./components/AddTeam";
 
 function App() {
   return (
@@ -18,6 +20,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/create_match" element={<AddMatch />} />
           <Route path="/add_question" element={<AddQuestion />} />
+          <Route path="/timer" element={<Timer />} />
+          <Route path="/add_team" element={<AddTeam />} />
+
         </Route>
       </Routes>
     </Router>
