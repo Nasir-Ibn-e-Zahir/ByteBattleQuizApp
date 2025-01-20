@@ -15,7 +15,7 @@ const AddTeam = () => {
   const submit = (data: teamAdditionData) => {
     mutate(data, {
       onSuccess: () => {
-        console.log("team compnenet");
+        console.log("team component");
       },
       onError: (error) => {
         console.log(error);
