@@ -6,6 +6,7 @@ import {
   Textarea,
   Stack,
   Text,
+  Spinner,
 } from "@chakra-ui/react";
 import {
   FormControl,
@@ -13,33 +14,60 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/form-control";
 import { useForm } from "react-hook-form";
-import useAddTeam, { TeamAdditionData } from "./useAddTeam";
-import { useNavigate } from "react-router-dom";
+import { TeamAdditionData, teamdata } from "./useAddTeam";
+import { useNavigate, useParams } from "react-router-dom";
+import { zodResolver } from "@hookform/resolvers/zod";
+import useEditTeam from "./useEditTeam";
+import { useEffect } from "react";
 
-const formShadow = "md"; // Define the formShadow variable
-const bgColor = "white"; // Define the bgColor variable
+const formShadow = "md";
+const bgColor = "white";
 
-const AddTeam = () => {
+const EditTeam = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm<TeamAdditionData>();
+  } = useForm<TeamAdditionData>({ resolver: zodResolver(teamdata) });
 
-  const navigate = useNavigate();
+  const { mutation, team, isError, isLoading } = useEditTeam(id, reset);
 
-  const { mutate } = useAddTeam();
+  useEffect(() => {
+    if (team) {
+      reset({
+        ...team,
+      });
+    }
+  }, [team, reset]);
 
   const submit = (data: TeamAdditionData) => {
-    mutate(data, {
+    mutation.mutate(data, {
       onSuccess: () => {
+        reset();
         navigate("/all_teams");
-      },
-      onError: (error) => {
-        console.log(error);
       },
     });
   };
+
+  if (isLoading) {
+    return (
+      <Box textAlign="center" mt={5}>
+        <Spinner size="xl" />
+      </Box>
+    );
+  }
+
+  if (isError) {
+    return (
+      <Box textAlign="center" mt={5}>
+        <Text color="red.500">Failed to load team data. Please try again.</Text>
+      </Box>
+    );
+  }
 
   return (
     <Box
@@ -52,10 +80,10 @@ const AddTeam = () => {
       mt={12}
     >
       <Heading as="h2" size="lg" textAlign="center" mb={4}>
-        Add New Team Here
+        Edit Team Here
       </Heading>
       <Text textAlign="center" color="gray.600" mb={6}>
-        Please fill in the details below to add a new team.
+        Please edit the details below to update the team.
       </Text>
       <Box bg="gray.50" p={6} borderRadius="md">
         <form onSubmit={handleSubmit(submit)}>
@@ -63,12 +91,13 @@ const AddTeam = () => {
             <FormControl isInvalid={!!errors.team_name}>
               <FormLabel fontWeight="bold">Team Name</FormLabel>
               <Input
+                defaultValue={team?.team_name}
                 type="text"
                 placeholder="Enter the team name"
                 {...register("team_name", {
                   required: "Team name is required",
                 })}
-                _focus={{ borderColor: "skyblue" }} // Sky-blue border on focus
+                _focus={{ borderColor: "skyblue" }}
               />
               <FormErrorMessage>{errors.team_name?.message}</FormErrorMessage>
             </FormControl>
@@ -76,11 +105,12 @@ const AddTeam = () => {
             <FormControl isInvalid={!!errors.description}>
               <FormLabel fontWeight="bold">Description</FormLabel>
               <Textarea
+                defaultValue={team?.description}
                 placeholder="Enter a brief description of the team"
                 {...register("description", {
                   required: "Description is required",
                 })}
-                _focus={{ borderColor: "skyblue" }} // Sky-blue border on focus
+                _focus={{ borderColor: "skyblue" }}
                 size="md"
                 resize="vertical"
               />
@@ -91,12 +121,13 @@ const AddTeam = () => {
               colorScheme="blue"
               size="lg"
               type="submit"
+              // isLoading={mutation.isLoading}
               _hover={{
                 bg: "teal.600",
               }}
               width="full"
             >
-              Add Team
+              Edit
             </Button>
           </Stack>
         </form>
@@ -105,4 +136,4 @@ const AddTeam = () => {
   );
 };
 
-export default AddTeam;
+export default EditTeam;

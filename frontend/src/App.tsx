@@ -10,6 +10,7 @@ import AddQuestion from "./components/AddQuestion";
 import Timer from "./components/Timer";
 import AddTeam from "./teams/AddTeam";
 import AllTeams from "./teams/AllTeams";
+import EditTeam from "./teams/EditTeam";
 
 function App() {
   return (
@@ -20,10 +21,15 @@ function App() {
           {/* <Route path="/register" element={<RegisterUser />} /> */}
           {/* <Route path="/login" element={<Login />} /> */}
           <Route path="/create_match" element={<AddMatch />} />
-          <Route path="/add_question" element={<AddQuestion />} />
           <Route path="/timer" element={<Timer />} />
-          <Route path="/add_team" element={<AddTeam />} />
-          <Route path="/all_teams" element={<AllTeams />} />
+          <Route path="/team">
+            <Route path="all_teams" element={<AllTeams />} />
+            <Route path="add_team" element={<AddTeam />} />
+            <Route path=":id/edit" element={<EditTeam />} />
+          </Route>
+          <Route path="/question">
+            <Route path="add_question" element={<AddQuestion />} />
+          </Route>
         </Route>
       </Routes>
     </Router>

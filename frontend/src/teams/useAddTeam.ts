@@ -7,11 +7,11 @@ export const teamdata = z.object({
   description: z.string(),
 });
 
-export type teamAdditionData = z.infer<typeof teamdata>;
+export type TeamAdditionData = z.infer<typeof teamdata>;
 
 const useAddTeam = () => {
   return useMutation({
-    mutationFn: async (data: teamAdditionData) => {
+    mutationFn: async (data: TeamAdditionData) => {
       teamdata.parse(data);
       const response = await axios.post(
         "http://localhost:3000/api/team/add",

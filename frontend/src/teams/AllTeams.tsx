@@ -1,31 +1,12 @@
-import {
-  Box,
-  Table,
-  Spinner,
-  Text,
-  Button,
-  IconButton,
-} from "@chakra-ui/react";
+import { Box, Table, Spinner, Text, Button } from "@chakra-ui/react";
 import useAllTeams from "./useAllTeams";
 import { Link } from "react-router-dom";
-import { FiDelete } from "react-icons/fi";
 import useDeleteTeam from "./useDeleteTeam";
 
 function AllTeams() {
   const { data: teams, error, isLoading } = useAllTeams();
 
   const { mutate: deleteTeam } = useDeleteTeam();
-
-  // const handleDeleteTeam = (id: number) => {
-  //   delteTeam(id, {
-  //     onSuccess: () => {
-  //       window.alert(`Team no ${id} deleted`);
-  //     },
-  //     onError: (error) => {
-  //       console.error(`Failed to delete team with id: ${id}`, error);
-  //     },
-  //   });
-  // };
 
   const handleDeleteTeam = (id: number) => {
     deleteTeam(id, {
@@ -83,7 +64,7 @@ function AllTeams() {
       p={5}
     >
       <Button>
-        <Link to={"/add_team"}>Add New Team</Link>
+        <Link to={"/team/add_team"}>Add New Team</Link>
       </Button>
 
       <Box>
@@ -102,11 +83,14 @@ function AllTeams() {
                 <Table.Cell>{team.team_name}</Table.Cell>
                 <Table.Cell>{team.description}</Table.Cell>
                 <Table.Cell>
-                  <IconButton
-                    aria-label="Delete team"
-                    // _icon={<FiDelete/>}
-                    onClick={() => handleDeleteTeam(team.id)}
-                  />
+                  <Button onClick={() => handleDeleteTeam(team.id)}>
+                    delete
+                  </Button>
+                </Table.Cell>
+                <Table.Cell>
+                  <Button background={"blue.600"}>
+                    <Link to={`/team/${team.id}/edit`}>Edit</Link>
+                  </Button>
                 </Table.Cell>
               </Table.Row>
             ))}
@@ -118,7 +102,7 @@ function AllTeams() {
 }
 
 export default AllTeams;
-function toast(arg0: {
+function toast(_arg0: {
   title: string;
   description: string;
   status: string;
