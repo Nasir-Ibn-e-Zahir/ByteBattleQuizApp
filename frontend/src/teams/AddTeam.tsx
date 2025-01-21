@@ -1,7 +1,20 @@
-import { Box, Button, Heading, Input, Textarea, Stack, Text } from "@chakra-ui/react";
-import { FormControl, FormLabel, FormErrorMessage } from "@chakra-ui/form-control";
+import {
+  Box,
+  Button,
+  Heading,
+  Input,
+  Textarea,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
+import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+} from "@chakra-ui/form-control";
 import { useForm } from "react-hook-form";
-import useAddTeam, { teamAdditionData } from "../hooks/useAddTeam";
+import useAddTeam, { teamAdditionData } from "./useAddTeam";
+import { useNavigate } from "react-router-dom";
 
 const formShadow = "md"; // Define the formShadow variable
 const bgColor = "white"; // Define the bgColor variable
@@ -13,12 +26,14 @@ const AddTeam = () => {
     formState: { errors },
   } = useForm<teamAdditionData>();
 
+  const navigate = useNavigate();
+
   const { mutate } = useAddTeam();
 
   const submit = (data: teamAdditionData) => {
     mutate(data, {
       onSuccess: () => {
-        console.log("team component");
+        navigate("/all_teams");
       },
       onError: (error) => {
         console.log(error);
@@ -28,13 +43,13 @@ const AddTeam = () => {
 
   return (
     <Box
-    maxWidth="1000px"
-    mx="auto"
-    p={8}
-    borderRadius="lg"
-    boxShadow={formShadow}
-    bg={bgColor}
-    mt={12}
+      maxWidth="1000px"
+      mx="auto"
+      p={8}
+      borderRadius="lg"
+      boxShadow={formShadow}
+      bg={bgColor}
+      mt={12}
     >
       <Heading as="h2" size="lg" textAlign="center" mb={4}>
         Add New Team Here
@@ -44,14 +59,16 @@ const AddTeam = () => {
       </Text>
       <Box bg="gray.50" p={6} borderRadius="md">
         <form onSubmit={handleSubmit(submit)}>
-          <Stack spacing={5}>
+          <Stack>
             <FormControl isInvalid={!!errors.team_name}>
               <FormLabel fontWeight="bold">Team Name</FormLabel>
               <Input
                 type="text"
                 placeholder="Enter the team name"
-                {...register("team_name", { required: "Team name is required" })}
-                focusBorderColor="skyblue" // Sky-blue border on focus
+                {...register("team_name", {
+                  required: "Team name is required",
+                })}
+                _focus={{ borderColor: "skyblue" }} // Sky-blue border on focus
               />
               <FormErrorMessage>{errors.team_name?.message}</FormErrorMessage>
             </FormControl>
@@ -60,8 +77,10 @@ const AddTeam = () => {
               <FormLabel fontWeight="bold">Description</FormLabel>
               <Textarea
                 placeholder="Enter a brief description of the team"
-                {...register("description", { required: "Description is required" })}
-                focusBorderColor="skyblue" // Sky-blue border on focus
+                {...register("description", {
+                  required: "Description is required",
+                })}
+                _focus={{ borderColor: "skyblue" }} // Sky-blue border on focus
                 size="md"
                 resize="vertical"
               />

@@ -25,8 +25,8 @@ exports.createTeam = async (req, res) => {
 
 exports.getAllTeams = async (req, res) => {
     try {
-        const teams = await db.Team.findAndCountAll({});
-        res.status(200).json({ allTeams: teams.rows, totalTeams: teams.count });
+        const { count, rows: teams } = await db.Team.findAndCountAll({});
+        res.status(200).json({ teams })
     } catch (error) {
         console.error("Error fetching teams: ", error);
         res.status(500).json({ error: "Failed to fetch teams." });
@@ -35,6 +35,7 @@ exports.getAllTeams = async (req, res) => {
 
 exports.destroyTeam = async (req, res) => {
     const teamId = req.params.id;
+    const transaction = await db.sequelize.transaction();
 
     try {
         const team = await db.Team.findByPk(teamId);
@@ -43,18 +44,30 @@ exports.destroyTeam = async (req, res) => {
             return res.status(404).json({ error: "Team not found." });
         }
 
-        // Delete associated records in Team_Match
-        await db.Team_Match.destroy({
-            where: { team_id: teamId }
+        // Delete associated records in Team_Match and the team within a transaction
+        await Promise.all([
+            db.Team_Match.destroy({
+                where: { team_id: teamId },
+                transaction
+            }),
+            team.destroy({ transaction })
+        ]);
+
+        await transaction.commit();
+
+        res.status(200).json({
+            success: true,
+            message: `Team ${team.team_name} deleted successfully.`,
+            deletedTeamId: teamId
         });
-
-        // Delete the team itself
-        await team.destroy();
-
-        res.status(200).json({ message: `Team ${team.team_name} deleted successfully.` });
     } catch (error) {
+        await transaction.rollback();
         console.error(`Failed to delete team with id ${teamId}: `, error);
-        res.status(500).json({ error: "Failed to delete team." });
+        res.status(500).json({
+            success: false,
+            error: "Failed to delete team.",
+            details: error.message
+        });
     }
 };
 

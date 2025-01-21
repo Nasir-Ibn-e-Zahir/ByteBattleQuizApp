@@ -1,11 +1,17 @@
-
-
-import { Box, Button, Heading, VStack, HStack, Text,Input} from '@chakra-ui/react';
-import { useForm } from 'react-hook-form';
-import useAddMatch, { matchDataFormat } from '../hooks/useAddMatch';
-import useAllTeams from '../hooks/useAllTeams';
-import { useState } from 'react';
-import { FormControl, FormLabel } from '@chakra-ui/form-control';
+import {
+  Box,
+  Button,
+  Heading,
+  VStack,
+  HStack,
+  Text,
+  Input,
+} from "@chakra-ui/react";
+import { useForm } from "react-hook-form";
+import useAddMatch, { matchDataFormat } from "../hooks/useAddMatch";
+import useAllTeams from "../teams/useAllTeams";
+import { useState } from "react";
+import { FormControl, FormLabel } from "@chakra-ui/form-control";
 
 export const AddMatch = () => {
   const { handleSubmit, register } = useForm<matchDataFormat>();
@@ -13,6 +19,7 @@ export const AddMatch = () => {
   const { data, isLoading, isError } = useAllTeams();
 
   const submit = (data: matchDataFormat) => {
+    console.log(data);
     mutate(data);
   };
 
@@ -22,14 +29,18 @@ export const AddMatch = () => {
   const handleAddTeam = () => {
     const newTeamDiv = (
       <HStack key={Date.now()} spacing={4} align="center">
-        <select id='team' >
+        <select id="team">
           {data?.map((team) => (
             <option key={team.description} value={team.team_name}>
               {team.team_name}
             </option>
           ))}
         </select>
-        <Button size="sm" colorScheme="red" onClick={() => handleRemoveTeam(teamSections.length)}>
+        <Button
+          size="sm"
+          colorScheme="red"
+          onClick={() => handleRemoveTeam(teamSections.length)}
+        >
           Remove
         </Button>
       </HStack>
@@ -40,7 +51,9 @@ export const AddMatch = () => {
 
   // Function to remove a team section
   const handleRemoveTeam = (index: number) => {
-    setTeamSections((prevSections) => prevSections.filter((_, idx) => idx !== index));
+    setTeamSections((prevSections) =>
+      prevSections.filter((_, idx) => idx !== index)
+    );
   };
 
   // Handle loading and error states
@@ -61,7 +74,15 @@ export const AddMatch = () => {
   }
 
   return (
-    <Box maxW="600px" mx="auto" p={8} borderWidth={1} borderRadius="lg" boxShadow="lg" bg="white">
+    <Box
+      maxW="600px"
+      mx="auto"
+      p={8}
+      borderWidth={1}
+      borderRadius="lg"
+      boxShadow="lg"
+      bg="white"
+    >
       <Heading as="h2" size="lg" textAlign="center" mb={6}>
         Add New Match
       </Heading>
@@ -72,14 +93,17 @@ export const AddMatch = () => {
             <Input
               type="text"
               placeholder="Enter match name"
-              {...register('match_name', { required: true })}
+              {...register("match_name", { required: true })}
               focusBorderColor="blue.500"
             />
           </FormControl>
 
           <FormControl>
             <FormLabel>Select Match Type</FormLabel>
-            <select id='match_type' {...register('match_type', { required: true })}>
+            <select
+              id="match_type"
+              {...register("match_type", { required: true })}
+            >
               <option value="ict">ICT</option>
               <option value="general_knowledge">General Knowledge</option>
             </select>
