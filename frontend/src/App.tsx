@@ -6,11 +6,13 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 // import Login from "./components/auth/Login";
 import LayOut from "./Layout";
 import AddMatch from "./components/AddMatch";
-import AddQuestion from "./components/AddQuestion";
+import AddQuestion from "./questions/components/AddQuestion";
 import Timer from "./components/Timer";
-import AddTeam from "./teams/AddTeam";
-import AllTeams from "./teams/AllTeams";
-import EditTeam from "./teams/EditTeam";
+import AddTeam from "./teams/components/AddTeam";
+import AllTeams from "./teams/components/AllTeams";
+import EditTeam from "./teams/components/EditTeam";
+import AllQuestions from "./questions/components/AllQuestions";
+import EditQuestion from "./questions/components/EditQuestion";
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
           </Route>
           <Route path="/question">
             <Route path="add_question" element={<AddQuestion />} />
+            <Route path="all_questions" element={<AllQuestions />} />
+            <Route path=":id/edit" element={<EditQuestion />} />
           </Route>
         </Route>
       </Routes>

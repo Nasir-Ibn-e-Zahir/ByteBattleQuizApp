@@ -14,10 +14,10 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/form-control";
 import { useForm } from "react-hook-form";
-import { TeamAdditionData, teamdata } from "./useAddTeam";
+import { TeamAdditionData, teamdata } from "../hooks/useAddTeam";
 import { useNavigate, useParams } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
-import useEditTeam from "./useEditTeam";
+import useEditTeam from "../hooks/useEditTeam";
 import { useEffect } from "react";
 
 const formShadow = "md";

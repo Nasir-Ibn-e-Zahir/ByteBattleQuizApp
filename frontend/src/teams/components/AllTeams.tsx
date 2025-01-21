@@ -1,7 +1,7 @@
 import { Box, Table, Spinner, Text, Button } from "@chakra-ui/react";
-import useAllTeams from "./useAllTeams";
+import useAllTeams from "../hooks/useAllTeams";
 import { Link } from "react-router-dom";
-import useDeleteTeam from "./useDeleteTeam";
+import useDeleteTeam from "../hooks/useDeleteTeam";
 
 function AllTeams() {
   const { data: teams, error, isLoading } = useAllTeams();

@@ -13,7 +13,7 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/form-control";
 import { useForm } from "react-hook-form";
-import useAddTeam, { TeamAdditionData } from "./useAddTeam";
+import useAddTeam, { TeamAdditionData } from "../hooks/useAddTeam";
 import { useNavigate } from "react-router-dom";
 
 const formShadow = "md"; // Define the formShadow variable

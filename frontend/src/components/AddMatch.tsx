@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import useAddMatch, { matchDataFormat } from "../hooks/useAddMatch";
-import useAllTeams from "../teams/useAllTeams";
+import useAllTeams from "../teams/hooks/useAllTeams";
 import { useState } from "react";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 

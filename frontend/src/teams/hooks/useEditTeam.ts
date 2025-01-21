@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import axios from "../services/axios";
+import axios from "../../services/axios";
 import { TeamAdditionData } from "./useAddTeam";
 
 const fetchTeam = async (id: string) => {
