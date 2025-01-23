@@ -48,7 +48,7 @@ const EditTeam = () => {
     mutation.mutate(data, {
       onSuccess: () => {
         reset();
-        navigate("/all_teams");
+        navigate("/team/all_teams");
       },
     });
   };

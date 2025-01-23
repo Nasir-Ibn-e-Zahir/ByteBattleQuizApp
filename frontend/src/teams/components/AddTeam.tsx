@@ -33,7 +33,7 @@ const AddTeam = () => {
   const submit = (data: TeamAdditionData) => {
     mutate(data, {
       onSuccess: () => {
-        navigate("/all_teams");
+        navigate("/team/all_teams");
       },
       onError: (error) => {
         console.log(error);

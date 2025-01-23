@@ -6,5 +6,6 @@ router.post('/add', matchcontroller.createMatch)
 router.delete('/:id', matchcontroller.destroyMatch)
 router.get('/:id/edit', matchcontroller.editMatch)
 router.put('/:id', matchcontroller.updateMatch)
+router.get('/all_matches', matchcontroller.getAllMatches)
 
 module.exports = router;

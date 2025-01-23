@@ -43,7 +43,7 @@ module.exports = (sequelize) => {
   Team_Match.associate = (models) => {
     Team_Match.belongsTo(models.Team, {
       foreignKey: "team_id",
-      as: "team",
+      as: "teams",
     });
     Team_Match.belongsTo(models.Match, {
       foreignKey: "match_id",

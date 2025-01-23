@@ -39,6 +39,56 @@ exports.createMatch = async (req, res) => {
     }
 };
 
+// exports.getAllMatches = async (req, res) => {
+//     try {
+//         const { count, rows: matches } = await db.Match.findAndCountAll({
+
+//             include: [
+//                 {
+//                     model: db.Team_Match,
+//                     as: "rounds",
+//                     include: [
+//                         {
+//                             model: db.Team,
+//                             as: "team"
+//                         }
+//                     ]
+//                 }
+//             ]
+
+//         })
+
+//         res.status(200).json(count, matches)
+//     } catch (error) {
+//         res.status(500).json({ error: "Failed to fetch matches" })
+//     }
+// }
+exports.getAllMatches = async (req, res) => {
+    try {
+        // Fetch all matches along with associated teams and their scores
+        const { count, rows: matches } = await db.Match.findAndCountAll({
+            include: [
+                {
+                    model: db.Team_Match,
+                    as: "rounds",
+                    include: [
+                        {
+                            model: db.Team,
+                            as: "teams", // Ensure this matches the alias in your association
+                        },
+                    ],
+                },
+            ],
+        });
+
+        // Return the results
+        res.status(200).json({ count, matches });
+    } catch (error) {
+        console.error("Error fetching matches:", error);
+        res.status(500).json({ error: "Failed to fetch matches" });
+    }
+};
+
 exports.destroyMatch = async (req, res) => {
     const matchId = req.params.id;
 

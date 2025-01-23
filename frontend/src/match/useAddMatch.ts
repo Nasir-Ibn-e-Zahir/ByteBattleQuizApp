@@ -3,6 +3,7 @@ import axios from "axios";
 import { z } from "zod";
 
 export const matchData = z.object({
+  team_ids: z.array(z.string()),
   match_name: z.string(),
   match_type: z.string(),
 });
@@ -13,6 +14,7 @@ const useAddMatch = () => {
   return useMutation({
     mutationFn: async (data: matchDataFormat) => {
       matchData.parse(data);
+
       const response = await axios.post(
         "http://localhost:3000/api/match/add",
         data

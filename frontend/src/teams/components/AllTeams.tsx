@@ -51,8 +51,13 @@ function AllTeams() {
 
   if (!teams || teams.length === 0) {
     return (
-      <Box textAlign="center" mt={5}>
-        <Text>No teams available.</Text>
+      <Box>
+        <Box textAlign="center" my={5}>
+          <Text>No teams available.</Text>
+        </Box>
+        <Button>
+          <Link to={"/team/add_team"}>Add New Team</Link>
+        </Button>
       </Box>
     );
   }

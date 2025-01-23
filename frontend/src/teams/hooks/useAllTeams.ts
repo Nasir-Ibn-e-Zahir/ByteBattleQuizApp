@@ -2,11 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "../../services/axios";
 
 // Define the structure of the team data
-interface Team {
+export interface Team {
   id: number;
   team_name: string;
   description: string;
-  score: number;
 }
 
 interface ResponseTeams {
