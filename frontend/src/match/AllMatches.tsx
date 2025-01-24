@@ -2,9 +2,15 @@ import { Box, Button, Span, Table } from "@chakra-ui/react";
 import { List, ListItem } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import useAllMatches from "./useAllMatches";
+import useDeleteMatch from "./useDeleteMatch";
 
 function AllMatches() {
   const { data: matches, isError, isLoading } = useAllMatches();
+  const { mutate: deleteMatch } = useDeleteMatch();
+
+  const handleDeleteMatch = (id: number) => {
+    deleteMatch(id);
+  };
 
   if (isLoading) return <Box>Loading...</Box>;
   if (isError) return <Box>Error loading matches</Box>;
@@ -45,8 +51,11 @@ function AllMatches() {
                   <Button>
                     <Link to={`/match/${match.id}/scoreboard`}>Scoreboard</Link>
                   </Button>
-                  <Button>
+                  <Button mx={3}>
                     <Link to={`/match/${match.id}/edit`}>Edit</Link>
+                  </Button>
+                  <Button onClick={() => handleDeleteMatch(match.id)}>
+                    Delete
                   </Button>
                 </Table.Cell>
               </Table.Row>
