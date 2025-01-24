@@ -7,10 +7,13 @@ function LayOut() {
     <Box>
       <Nevbar />
       <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="100vh"
+        width="1200px"
+        mx="auto"
+        p={8}
+        borderRadius="lg"
+        boxShadow={"md"}
+        bg={"white"}
+        mt={12}
       >
         <Outlet />
       </Box>

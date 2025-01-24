@@ -63,11 +63,7 @@ function AllTeams() {
   }
 
   return (
-    <Box
-      width={"100vh"}
-      // overflowX="auto"
-      p={5}
-    >
+    <Box>
       <Button>
         <Link to={"/team/add_team"}>Add New Team</Link>
       </Button>
@@ -91,8 +87,6 @@ function AllTeams() {
                   <Button onClick={() => handleDeleteTeam(team.id)}>
                     delete
                   </Button>
-                </Table.Cell>
-                <Table.Cell>
                   <Button background={"blue.600"}>
                     <Link to={`/team/${team.id}/edit`}>Edit</Link>
                   </Button>

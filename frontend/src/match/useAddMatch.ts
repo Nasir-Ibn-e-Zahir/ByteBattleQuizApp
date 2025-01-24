@@ -25,11 +25,11 @@ const useAddMatch = () => {
       return response;
     },
     onSuccess: (response) => {
-      console.log("Team Inserted Successfully", response.data);
+      console.log("Match created Successfully", response.data);
       navigate("/match/all_matches");
     },
     onError: (e) => {
-      console.log("Some error occurred durig team insertion", e);
+      console.log("Some error occurred durig creating match.", e);
     },
   });
 };

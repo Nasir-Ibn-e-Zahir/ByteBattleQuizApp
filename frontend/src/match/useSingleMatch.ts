@@ -2,16 +2,6 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "../services/axios";
 import { Round } from "./useAllMatches";
 
-// interface Round {
-//   id: number;
-//   team_id: number;
-//   match_id: number;
-//   score: number;
-//   teams: {
-//     id: number;
-//     team_name: string;
-//   };
-// }
 interface Match {
   id: number;
   match_name: string;
@@ -24,10 +14,9 @@ const fetchSingleMatch = async (id: string | undefined): Promise<Match> => {
     throw new Error("Match ID is required"); // Handle case where `id` is undefined
   }
 
-  const response = await axios.get(`match/${id}/match`);
-  // Check if `matches` exists in the response
-  //   console.log(response.data);
-  return response.data.match; // Return an empty array if `matches` is undefined
+  const response = await axios.get(`match/${id}/edit`);
+
+  return response.data.match;
 };
 
 const useSingleMatch = (id: string | undefined) => {

@@ -8,7 +8,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import useAddMatch, { matchDataFormat } from "./useAddMatch";
+import { matchDataFormat } from "./useAddMatch";
 import useAllTeams from "../teams/hooks/useAllTeams";
 import { useEffect, useState } from "react";
 import {
@@ -16,10 +16,15 @@ import {
   FormErrorMessage,
   FormLabel,
 } from "@chakra-ui/form-control";
+import useEditMatch from "./useEditMatch";
+import { useParams } from "react-router-dom";
+import useSingleMatch from "./useSingleMatch";
 
-export const AddMatch = () => {
+export const EditMatch = () => {
+  const { id } = useParams();
   const { handleSubmit, register } = useForm<matchDataFormat>();
-  const { mutate } = useAddMatch();
+  const { mutate } = useEditMatch(id);
+  const { data: match } = useSingleMatch(id);
   const { data: teams, isLoading, isError } = useAllTeams();
   const [teamSections, setTeamSections] = useState<
     { id: string; value: string }[]
@@ -96,13 +101,14 @@ export const AddMatch = () => {
   return (
     <Box>
       <Heading as="h2" size="lg" textAlign="center" mb={6}>
-        Add New Match
+        Update Match
       </Heading>
       <form onSubmit={handleSubmit(submit)}>
         <VStack align="stretch">
           <FormControl>
             <FormLabel>Enter Match Name</FormLabel>
             <Input
+              defaultValue={match?.match_name}
               type="text"
               placeholder="Enter match name"
               {...register("match_name", { required: true })}
@@ -116,8 +122,9 @@ export const AddMatch = () => {
               id="match_type"
               {...register("match_type", { required: true })}
             >
-              <option value="ict">ICT</option>
-              <option value="general_knowledge">General Knowledge</option>
+              <option value={match?.match_type}>{match?.match_type}</option>
+              <option value="ICT">ICT</option>
+              <option value="General Knowledge">General Knowledge</option>
             </select>
           </FormControl>
 
@@ -176,4 +183,4 @@ export const AddMatch = () => {
   );
 };
 
-export default AddMatch;
+export default EditMatch;

@@ -14,9 +14,10 @@ function Nevbar() {
         <Box>
           <Heading>Admin Panel</Heading>
         </Box>
-        <Box width={"250px"} display={"flex"} justifyContent={"space-between"}>
+        <Box width={"350px"} display={"flex"} justifyContent={"space-between"}>
           <Link to="/team/all_teams">Teams</Link>
           <Link to="/match/all_matches">Matchs</Link>
+          <Link to="/question/all_questions">Questions</Link>
           <Link to="/teams">Logout</Link>
         </Box>
         <Box>

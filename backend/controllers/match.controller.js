@@ -48,7 +48,6 @@ exports.updateScore = async (req, res) => {
         return res.status(400).json({ error: "Invalid input data. Ensure rounds is an array." });
     }
 
-    // Validate each item in the array
     for (const round of rounds) {
         if (!round.team_id || !round.match_id || round.score === undefined) {
             return res.status(400).json({ error: "Invalid input data. Each item must contain team_id, match_id, and score." });
@@ -128,61 +127,24 @@ exports.getAllMatches = async (req, res) => {
     }
 };
 
-exports.getSingleMatch = async (req, res) => {
-    const matchId = req.params.id;
-
-    try {
-        const match = await db.Match.findOne({
-            where: {
-                id: matchId
-            },
-            include: [
-                {
-                    model: db.Team_Match,
-                    as: "rounds",
-                    where: {
-                        match_id: matchId
-                    },
-                    include: [
-                        {
-                            model: db.Team,
-                            as: "teams"
-                        }
-                    ]
-                }
-            ]
-        })
-
-
-        res.status(200).json({ match })
-    } catch (error) {
-        console.error("Error fetching round:", error);
-        res.status(500).json({ error: "Failed to fetch round" });
-    }
-}
 
 
 exports.destroyMatch = async (req, res) => {
     const matchId = req.params.id;
 
     try {
-        // Find the match by ID
         const match = await db.Match.findByPk(matchId);
 
-        // If match doesn't exist, return error
         if (!match) {
             return res.status(404).json({ error: "Match not found." });
         }
 
-        // Delete associated team match entries
         await db.Team_Match.destroy({
             where: { match_id: matchId },
         });
 
-        // Delete the match itself
         await match.destroy();
 
-        // Return success response
         return res.status(200).json({ message: "Match deleted successfully." });
     } catch (error) {
         console.error(`Failed to delete match with id ${matchId}:`, error);
@@ -200,7 +162,7 @@ exports.editMatch = async (req, res) => {
                 as: "rounds",
                 include: {
                     model: db.Team,
-                    as: "team",
+                    as: "teams",
                 },
             },
         });
@@ -228,22 +190,18 @@ exports.updateMatch = async (req, res) => {
             return res.status(404).json({ error: "Match not found." });
         }
 
-        // Update match details
         if (match_name || match_type) {
             await match.update({ match_name, match_type });
         }
 
         if (team_ids && Array.isArray(team_ids)) {
-            // Validate team IDs
             const existingTeams = await db.Team.findAll({ where: { id: team_ids } });
             if (existingTeams.length !== team_ids.length) {
                 return res.status(400).json({ error: "Some teams do not exist in the database." });
             }
 
-            // Remove old associations
             await db.Team_Match.destroy({ where: { match_id: matchId } });
 
-            // Create new associations
             const teamMatchEntries = team_ids.map((team_id) => ({
                 team_id,
                 match_id: matchId,

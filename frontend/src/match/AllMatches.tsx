@@ -10,7 +10,7 @@ function AllMatches() {
   if (isError) return <Box>Error loading matches</Box>;
 
   return (
-    <Box width={"100vh"} p={5}>
+    <Box>
       <Button mb={15}>
         <Link to={"/match/add_match"}>Create New Match</Link>
       </Button>
@@ -44,6 +44,9 @@ function AllMatches() {
                 <Table.Cell>
                   <Button>
                     <Link to={`/match/${match.id}/scoreboard`}>Scoreboard</Link>
+                  </Button>
+                  <Button>
+                    <Link to={`/match/${match.id}/edit`}>Edit</Link>
                   </Button>
                 </Table.Cell>
               </Table.Row>

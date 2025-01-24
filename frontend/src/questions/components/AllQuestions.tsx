@@ -50,11 +50,7 @@ function AllQuestions() {
   }
 
   return (
-    <Box
-      width={"100vh"}
-      // overflowX="auto"
-      p={5}
-    >
+    <Box>
       <Button>
         <Link to={"/question/add_question"}>Add New Question</Link>
       </Button>

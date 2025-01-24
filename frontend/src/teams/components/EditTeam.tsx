@@ -70,15 +70,7 @@ const EditTeam = () => {
   }
 
   return (
-    <Box
-      maxWidth="1000px"
-      mx="auto"
-      p={8}
-      borderRadius="lg"
-      boxShadow={formShadow}
-      bg={bgColor}
-      mt={12}
-    >
+    <Box>
       <Heading as="h2" size="lg" textAlign="center" mb={4}>
         Edit Team Here
       </Heading>

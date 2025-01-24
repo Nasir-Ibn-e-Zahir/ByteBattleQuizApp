@@ -25,15 +25,7 @@ const AddQuestion = () => {
   const formShadow = useColorModeValue("lg", "dark-lg");
 
   return (
-    <Box
-      maxWidth="1000px"
-      mx="auto"
-      p={8}
-      borderRadius="lg"
-      boxShadow={formShadow}
-      bg={bgColor}
-      mt={12}
-    >
+    <Box>
       <Heading as="h2" size="xl" textAlign="center" mb={4} fontWeight="bold">
         Add a New Question
       </Heading>

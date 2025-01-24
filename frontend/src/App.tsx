@@ -15,13 +15,14 @@ import AllQuestions from "./questions/components/AllQuestions";
 import EditQuestion from "./questions/components/EditQuestion";
 import AllMatches from "./match/AllMatches";
 import Scoreboard from "./match/Scoreboard";
+import EditMatch from "./match/EditMatch";
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route element={<LayOut />}>
-          <Route path="/" element={<Home />} />
           {/* <Route path="/register" element={<RegisterUser />} /> */}
           {/* <Route path="/login" element={<Login />} /> */}
 
@@ -38,6 +39,7 @@ function App() {
           </Route>
           <Route path="/match">
             <Route path="add_match" element={<AddMatch />} />
+            <Route path=":id/edit" element={<EditMatch />} />
             <Route path="all_matches" element={<AllMatches />} />
             <Route path=":id/scoreboard" element={<Scoreboard />} />
           </Route>
