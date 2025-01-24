@@ -1,9 +1,11 @@
 import { Box } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
+import Nevbar from "./components/Nevbar";
 
 function LayOut() {
   return (
     <Box>
+      <Nevbar />
       <Box
         display="flex"
         justifyContent="center"

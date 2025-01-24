@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "../services/axios";
 
-interface Round {
+export interface Round {
   id: number;
   team_id: number;
   match_id: number;
@@ -19,7 +19,7 @@ interface Match {
   rounds: Round[];
 }
 
-interface ResponseMatch {
+export interface ResponseMatch {
   matches: Match[];
 }
 

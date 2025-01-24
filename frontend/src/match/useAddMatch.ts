@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 
 export const matchData = z.object({
@@ -11,6 +12,8 @@ export const matchData = z.object({
 export type matchDataFormat = z.infer<typeof matchData>;
 
 const useAddMatch = () => {
+  const navigate = useNavigate();
+
   return useMutation({
     mutationFn: async (data: matchDataFormat) => {
       matchData.parse(data);
@@ -23,6 +26,7 @@ const useAddMatch = () => {
     },
     onSuccess: (response) => {
       console.log("Team Inserted Successfully", response.data);
+      navigate("/match/all_matches");
     },
     onError: (e) => {
       console.log("Some error occurred durig team insertion", e);

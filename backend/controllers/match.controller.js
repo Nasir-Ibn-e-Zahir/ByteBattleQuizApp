@@ -1,5 +1,6 @@
 const { where } = require("sequelize");
 const db = require("../models");
+const { model } = require("mongoose");
 
 exports.createMatch = async (req, res) => {
     const { match_name, match_type, team_ids } = req.body;
@@ -39,6 +40,45 @@ exports.createMatch = async (req, res) => {
     }
 };
 
+
+exports.updateScore = async (req, res) => {
+    const { rounds } = req.body;
+
+    if (!Array.isArray(rounds)) {
+        return res.status(400).json({ error: "Invalid input data. Ensure rounds is an array." });
+    }
+
+    // Validate each item in the array
+    for (const round of rounds) {
+        if (!round.team_id || !round.match_id || round.score === undefined) {
+            return res.status(400).json({ error: "Invalid input data. Each item must contain team_id, match_id, and score." });
+        }
+    }
+
+    const transaction = await db.sequelize.transaction(); // Start a transaction
+
+    try {
+        for (const round of rounds) {
+            await db.Team_Match.update(
+                { score: round.score },
+                {
+                    where: {
+                        team_id: round.team_id,
+                        match_id: round.match_id,
+                    },
+                    transaction, // Pass the transaction object
+                }
+            );
+        }
+
+        await transaction.commit(); // Commit the transaction
+        res.status(200).json({ message: "Scores updated successfully." });
+    } catch (error) {
+        await transaction.rollback(); // Rollback the transaction on error
+        console.error("Error updating scores:", error);
+        res.status(500).json({ error: "Failed to update scores.", details: error.message });
+    }
+};
 // exports.getAllMatches = async (req, res) => {
 //     try {
 //         const { count, rows: matches } = await db.Match.findAndCountAll({
@@ -74,20 +114,53 @@ exports.getAllMatches = async (req, res) => {
                     include: [
                         {
                             model: db.Team,
-                            as: "teams", // Ensure this matches the alias in your association
+                            as: "teams",
                         },
                     ],
                 },
             ],
         });
 
-        // Return the results
         res.status(200).json({ count, matches });
     } catch (error) {
         console.error("Error fetching matches:", error);
         res.status(500).json({ error: "Failed to fetch matches" });
     }
 };
+
+exports.getSingleMatch = async (req, res) => {
+    const matchId = req.params.id;
+
+    try {
+        const match = await db.Match.findOne({
+            where: {
+                id: matchId
+            },
+            include: [
+                {
+                    model: db.Team_Match,
+                    as: "rounds",
+                    where: {
+                        match_id: matchId
+                    },
+                    include: [
+                        {
+                            model: db.Team,
+                            as: "teams"
+                        }
+                    ]
+                }
+            ]
+        })
+
+
+        res.status(200).json({ match })
+    } catch (error) {
+        console.error("Error fetching round:", error);
+        res.status(500).json({ error: "Failed to fetch round" });
+    }
+}
+
 
 exports.destroyMatch = async (req, res) => {
     const matchId = req.params.id;
@@ -185,3 +258,5 @@ exports.updateMatch = async (req, res) => {
         res.status(500).json({ error: "Failed to update match." });
     }
 };
+
+

@@ -41,6 +41,11 @@ function AllMatches() {
                     ))}
                   </List.Root>
                 </Table.Cell>
+                <Table.Cell>
+                  <Button>
+                    <Link to={`/match/${match.id}/scoreboard`}>Scoreboard</Link>
+                  </Button>
+                </Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>
