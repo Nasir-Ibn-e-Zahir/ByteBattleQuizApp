@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import axios from "../services/axios";
+import axios from "../../services/axios";
 import { Round } from "./useAllMatches";
 
 interface Match {

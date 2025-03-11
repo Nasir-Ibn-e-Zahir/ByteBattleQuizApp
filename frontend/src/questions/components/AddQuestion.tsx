@@ -3,7 +3,20 @@ import {
   FormControl,
   FormErrorMessage,
 } from "@chakra-ui/form-control";
-import { Box, Button, Heading, Input, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  createListCollection,
+  Heading,
+  Input,
+  SelectContent,
+  SelectItem,
+  SelectRoot,
+  SelectTrigger,
+  SelectValueText,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import { useColorModeValue } from "@chakra-ui/color-mode";
 import { useForm } from "react-hook-form";
 import useAddQuestion, { questionDataFormat } from "../hooks/useAddQuestion";
@@ -20,9 +33,15 @@ const AddQuestion = () => {
     mutate(data);
   };
 
-  const bgColor = useColorModeValue("white", "gray.800");
   const formBg = useColorModeValue("gray.50", "gray.700");
-  const formShadow = useColorModeValue("lg", "dark-lg");
+  const frameworks = createListCollection({
+    items: [
+      { label: "ICT", value: "ICT" },
+      { label: "General Knowledge", value: "General Knowledge" },
+      { label: "English Grammer", value: "English Grammer" },
+      { label: "Urdu", value: "Urdu" },
+    ],
+  });
 
   return (
     <Box>
@@ -35,6 +54,36 @@ const AddQuestion = () => {
       <Box bg={formBg} p={6} borderRadius="md">
         <form onSubmit={handleSubmit(submit)}>
           <Stack>
+            <FormControl isInvalid={!!errors.q_type}>
+              <FormLabel fontWeight="bold">Question Type</FormLabel>
+              <SelectRoot
+                collection={frameworks}
+                bg="gray.50"
+                border="2px solid"
+                borderColor="gray.300"
+                _hover={{ borderColor: "blue.400" }}
+                _focus={{
+                  borderColor: "blue.500",
+                  boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.5)",
+                }}
+              >
+                <SelectTrigger
+                  {...register("q_type", {
+                    required: "Question type is required",
+                  })}
+                >
+                  <SelectValueText placeholder="Select Question type" />
+                </SelectTrigger>
+                <SelectContent>
+                  {frameworks.items.map((question) => (
+                    <SelectItem item={question} key={question.value}>
+                      {question.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </SelectRoot>
+              <FormErrorMessage>{errors.q_type?.message}</FormErrorMessage>
+            </FormControl>
             <FormControl isInvalid={!!errors.question}>
               <FormLabel fontWeight="bold">Question</FormLabel>
               <Input

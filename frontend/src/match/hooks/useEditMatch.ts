@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { matchDataFormat } from "./useAddMatch";
-import axios from "../services/axios";
+import axios from "../../services/axios";
 import { useNavigate } from "react-router-dom";
 
 const useEditMatch = (id: string | undefined) => {

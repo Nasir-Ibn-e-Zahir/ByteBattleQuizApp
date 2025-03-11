@@ -8,23 +8,18 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { matchDataFormat } from "./useAddMatch";
-import useAllTeams from "../teams/hooks/useAllTeams";
+import useAddMatch, { matchDataFormat } from "../hooks/useAddMatch";
+import useAllTeams from "../../teams/hooks/useAllTeams";
 import { useEffect, useState } from "react";
 import {
   FormControl,
   FormErrorMessage,
   FormLabel,
 } from "@chakra-ui/form-control";
-import useEditMatch from "./useEditMatch";
-import { useParams } from "react-router-dom";
-import useSingleMatch from "./useSingleMatch";
 
-export const EditMatch = () => {
-  const { id } = useParams();
+export const AddMatch = () => {
   const { handleSubmit, register } = useForm<matchDataFormat>();
-  const { mutate } = useEditMatch(id);
-  const { data: match } = useSingleMatch(id);
+  const { mutate } = useAddMatch();
   const { data: teams, isLoading, isError } = useAllTeams();
   const [teamSections, setTeamSections] = useState<
     { id: string; value: string }[]
@@ -101,14 +96,13 @@ export const EditMatch = () => {
   return (
     <Box>
       <Heading as="h2" size="lg" textAlign="center" mb={6}>
-        Update Match
+        Add New Match
       </Heading>
       <form onSubmit={handleSubmit(submit)}>
         <VStack align="stretch">
           <FormControl>
             <FormLabel>Enter Match Name</FormLabel>
             <Input
-              defaultValue={match?.match_name}
               type="text"
               placeholder="Enter match name"
               {...register("match_name", { required: true })}
@@ -122,9 +116,8 @@ export const EditMatch = () => {
               id="match_type"
               {...register("match_type", { required: true })}
             >
-              <option value={match?.match_type}>{match?.match_type}</option>
-              <option value="ICT">ICT</option>
-              <option value="General Knowledge">General Knowledge</option>
+              <option value="ict">ICT</option>
+              <option value="general_knowledge">General Knowledge</option>
             </select>
           </FormControl>
 
@@ -183,4 +176,4 @@ export const EditMatch = () => {
   );
 };
 
-export default EditMatch;
+export default AddMatch;

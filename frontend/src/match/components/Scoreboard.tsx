@@ -7,7 +7,7 @@ import {
   Spinner,
   Button,
 } from "@chakra-ui/react";
-import useSingleMatch from "./useSingleMatch";
+import useSingleMatch from "../hooks/useSingleMatch";
 import { useParams } from "react-router-dom";
 import { FormControl } from "@chakra-ui/form-control";
 import { useEffect, useState } from "react";

@@ -1,8 +1,8 @@
 import { Box, Button, Span, Table } from "@chakra-ui/react";
 import { List, ListItem } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import useAllMatches from "./useAllMatches";
-import useDeleteMatch from "./useDeleteMatch";
+import useAllMatches from "../hooks/useAllMatches";
+import useDeleteMatch from "../hooks/useDeleteMatch";
 
 function AllMatches() {
   const { data: matches, isError, isLoading } = useAllMatches();

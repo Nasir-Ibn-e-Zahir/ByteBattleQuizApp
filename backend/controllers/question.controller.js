@@ -11,6 +11,7 @@ exports.createQuestion = async (req, res) => {
 
     // Insert the new question into the database
     await db.Question.create({
+      q_type,
       question,
       option_a,
       option_b,
@@ -80,7 +81,7 @@ exports.editQuestion = async (req, res) => {
 
 exports.updateQuestion = async (req, res) => {
   const questionId = req.params.id;
-  const { question, option_a, option_b, option_c, option_d, correct_option } = req.body;
+  const { q_type, question, option_a, option_b, option_c, option_d, correct_option } = req.body;
 
   const transaction = await db.sequelize.transaction()
 
@@ -92,6 +93,7 @@ exports.updateQuestion = async (req, res) => {
     }
 
     const updatedFields = {
+      q_type: q_type || questionInDB.q_type,
       question: question || questionInDB.question,
       option_a: option_a || questionInDB.option_a,
       option_b: option_b || questionInDB.option_b,

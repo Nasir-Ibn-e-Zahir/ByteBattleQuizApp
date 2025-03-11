@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 
 export const questionData = z.object({
+  q_type: z.string(),
   question: z.string(),
   option_a: z.string(),
   option_b: z.string(),

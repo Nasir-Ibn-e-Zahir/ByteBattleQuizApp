@@ -5,7 +5,7 @@ import Home from "./components/Home";
 // import RegisterUser from "./components/auth/RegisterUser";
 // import Login from "./components/auth/Login";
 import LayOut from "./Layout";
-import AddMatch from "./match/AddMatch";
+import AddMatch from "./match/components/AddMatch";
 import AddQuestion from "./questions/components/AddQuestion";
 import Timer from "./components/Timer";
 import AddTeam from "./teams/components/AddTeam";
@@ -13,9 +13,10 @@ import AllTeams from "./teams/components/AllTeams";
 import EditTeam from "./teams/components/EditTeam";
 import AllQuestions from "./questions/components/AllQuestions";
 import EditQuestion from "./questions/components/EditQuestion";
-import AllMatches from "./match/AllMatches";
-import Scoreboard from "./match/Scoreboard";
-import EditMatch from "./match/EditMatch";
+import AllMatches from "./match/components/AllMatches";
+import Scoreboard from "./match/components/Scoreboard";
+import EditMatch from "./match/components/EditMatch";
+import MainScreen from "./components/MainScreen";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
             <Route path=":id/edit" element={<EditMatch />} />
             <Route path="all_matches" element={<AllMatches />} />
             <Route path=":id/scoreboard" element={<Scoreboard />} />
+            <Route path=":id/quiz" element={<MainScreen />} />
           </Route>
         </Route>
       </Routes>
