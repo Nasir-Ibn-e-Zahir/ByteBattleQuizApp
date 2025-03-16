@@ -78,30 +78,7 @@ exports.updateScore = async (req, res) => {
         res.status(500).json({ error: "Failed to update scores.", details: error.message });
     }
 };
-// exports.getAllMatches = async (req, res) => {
-//     try {
-//         const { count, rows: matches } = await db.Match.findAndCountAll({
 
-//             include: [
-//                 {
-//                     model: db.Team_Match,
-//                     as: "rounds",
-//                     include: [
-//                         {
-//                             model: db.Team,
-//                             as: "team"
-//                         }
-//                     ]
-//                 }
-//             ]
-
-//         })
-
-//         res.status(200).json(count, matches)
-//     } catch (error) {
-//         res.status(500).json({ error: "Failed to fetch matches" })
-//     }
-// }
 exports.getAllMatches = async (req, res) => {
     try {
         // Fetch all matches along with associated teams and their scores

@@ -4,6 +4,7 @@ const QuestionController = require("../controllers/question.controller")
 
 router.post('/add', QuestionController.createQuestion)
 router.get('/all_questions', QuestionController.getAllQuestions)
+router.get('/all_question_types', QuestionController.getAllQuestionType)
 router.delete('/:id', QuestionController.destroyQuestion)
 router.get('/:id/edit', QuestionController.editQuestion)
 router.put('/:id', QuestionController.updateQuestion)

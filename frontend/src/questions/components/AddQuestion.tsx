@@ -3,20 +3,7 @@ import {
   FormControl,
   FormErrorMessage,
 } from "@chakra-ui/form-control";
-import {
-  Box,
-  Button,
-  createListCollection,
-  Heading,
-  Input,
-  SelectContent,
-  SelectItem,
-  SelectRoot,
-  SelectTrigger,
-  SelectValueText,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Heading, Input, Stack, Text } from "@chakra-ui/react";
 import { useColorModeValue } from "@chakra-ui/color-mode";
 import { useForm } from "react-hook-form";
 import useAddQuestion, { questionDataFormat } from "../hooks/useAddQuestion";
@@ -34,14 +21,6 @@ const AddQuestion = () => {
   };
 
   const formBg = useColorModeValue("gray.50", "gray.700");
-  const frameworks = createListCollection({
-    items: [
-      { label: "ICT", value: "ICT" },
-      { label: "General Knowledge", value: "General Knowledge" },
-      { label: "English Grammer", value: "English Grammer" },
-      { label: "Urdu", value: "Urdu" },
-    ],
-  });
 
   return (
     <Box>
@@ -56,33 +35,32 @@ const AddQuestion = () => {
           <Stack>
             <FormControl isInvalid={!!errors.q_type}>
               <FormLabel fontWeight="bold">Question Type</FormLabel>
-              <SelectRoot
-                collection={frameworks}
+              <Input
+                type="text"
+                placeholder="e.g., General Knowledge, English, Computer Science, ..."
+                {...register("q_type", {
+                  required: "Question type is required",
+                })}
                 bg="gray.50"
+                borderRadius="md"
                 border="2px solid"
                 borderColor="gray.300"
-                _hover={{ borderColor: "blue.400" }}
+                _hover={{
+                  borderColor: "blue.400",
+                }}
                 _focus={{
+                  outline: "none",
                   borderColor: "blue.500",
                   boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.5)",
                 }}
-              >
-                <SelectTrigger
-                  {...register("q_type", {
-                    required: "Question type is required",
-                  })}
-                >
-                  <SelectValueText placeholder="Select Question type" />
-                </SelectTrigger>
-                <SelectContent>
-                  {frameworks.items.map((question) => (
-                    <SelectItem item={question} key={question.value}>
-                      {question.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </SelectRoot>
-              <FormErrorMessage>{errors.q_type?.message}</FormErrorMessage>
+                _placeholder={{
+                  color: "gray.400",
+                }}
+                p={4}
+              />
+              <FormErrorMessage color="red">
+                {errors.q_type?.message}
+              </FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={!!errors.question}>
               <FormLabel fontWeight="bold">Question</FormLabel>
@@ -109,7 +87,9 @@ const AddQuestion = () => {
                 }}
                 p={4}
               />
-              <FormErrorMessage>{errors.question?.message}</FormErrorMessage>
+              <FormErrorMessage color="red">
+                {errors.question?.message}
+              </FormErrorMessage>
             </FormControl>
 
             <FormControl isInvalid={!!errors.option_a}>
@@ -135,7 +115,9 @@ const AddQuestion = () => {
                 }}
                 p={4}
               />
-              <FormErrorMessage>{errors.option_a?.message}</FormErrorMessage>
+              <FormErrorMessage color="red">
+                {errors.option_a?.message}
+              </FormErrorMessage>
             </FormControl>
 
             <FormControl isInvalid={!!errors.option_b}>
@@ -161,7 +143,9 @@ const AddQuestion = () => {
                 }}
                 p={4}
               />
-              <FormErrorMessage>{errors.option_b?.message}</FormErrorMessage>
+              <FormErrorMessage color="red">
+                {errors.option_b?.message}
+              </FormErrorMessage>
             </FormControl>
 
             <FormControl isInvalid={!!errors.option_c}>
@@ -187,7 +171,9 @@ const AddQuestion = () => {
                 }}
                 p={4}
               />
-              <FormErrorMessage>{errors.option_c?.message}</FormErrorMessage>
+              <FormErrorMessage color="red">
+                {errors.option_c?.message}
+              </FormErrorMessage>
             </FormControl>
 
             <FormControl isInvalid={!!errors.option_d}>
@@ -213,7 +199,9 @@ const AddQuestion = () => {
                 }}
                 p={4}
               />
-              <FormErrorMessage>{errors.option_d?.message}</FormErrorMessage>
+              <FormErrorMessage color="red">
+                {errors.option_d?.message}
+              </FormErrorMessage>
             </FormControl>
 
             <FormControl isInvalid={!!errors.correct_option}>
@@ -241,7 +229,7 @@ const AddQuestion = () => {
                 }}
                 p={4}
               />
-              <FormErrorMessage>
+              <FormErrorMessage color="red">
                 {errors.correct_option?.message}
               </FormErrorMessage>
             </FormControl>
@@ -251,7 +239,7 @@ const AddQuestion = () => {
               size="lg"
               type="submit"
               _hover={{
-                bg: "blue.600", // Slightly darker blue on hover
+                bg: "blue.600",
               }}
               width="full"
             >

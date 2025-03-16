@@ -1,19 +1,42 @@
-import { Box, Button, Spinner, Table, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  HStack,
+  Spinner,
+  Table,
+  Text,
+  Select,
+} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import useAllQuestoins from "../hooks/uesAllQustions";
 import useDeleteQuestion from "../hooks/useDeleteQuestion";
+import useAllQuestoin_type from "../hooks/useAllQuestion_type";
+import { useState } from "react";
 
-function AllQuestions() {
+export const AllQuestions = () => {
   const { data: questions, isLoading, error } = useAllQuestoins();
-
+  const { data: q_types } = useAllQuestoin_type();
+  const [SelectedType, setSelectedType] = useState("");
   const { mutate: deleteQuestion } = useDeleteQuestion();
+
+  const filteredQuestions = SelectedType
+    ? questions?.filter((q) => q.q_type == SelectedType)
+    : questions;
+
+  const typeOptions = [
+    { value: "", lable: "All Types" },
+    ...(q_types?.map((t) => ({
+      value: t.question_type,
+      lable: t.question_type,
+    })) || []),
+  ];
 
   const handleDeleteQuestion = (id: number) => {
     deleteQuestion(id, {
       onSuccess: () => {
         toast({
-          title: "Team deleted.",
-          description: `Team with ID ${id} has been deleted successfully.`,
+          title: "Question deleted.",
+          description: `Question with ID ${id} has been deleted successfully.`,
           status: "success",
           duration: 5000,
           isClosable: true,
@@ -21,8 +44,8 @@ function AllQuestions() {
       },
       onError: (error) => {
         toast({
-          title: "Error deleting team.",
-          description: `Failed to delete team with ID ${id}. ${error.message}`,
+          title: "Error deleting question.",
+          description: `Failed to delete question with ID ${id}. ${error.message}`,
           status: "error",
           duration: 5000,
           isClosable: true,
@@ -51,15 +74,29 @@ function AllQuestions() {
 
   return (
     <Box>
-      <Button>
-        <Link to={"/question/add_question"}>Add New Question</Link>
-      </Button>
-
+      <HStack>
+        <select
+          value={SelectedType}
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+            setSelectedType(e.target.value)
+          }
+        >
+          {typeOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.lable}
+            </option>
+          ))}
+        </select>
+        <Button>
+          <Link to={"/question/add_question"}>Add New Question</Link>
+        </Button>
+      </HStack>
       <Box>
         <Table.Root>
           <Table.Header>
             <Table.Row>
               <Table.ColumnHeader>ID</Table.ColumnHeader>
+              <Table.ColumnHeader>Question Type</Table.ColumnHeader>
               <Table.ColumnHeader>Question</Table.ColumnHeader>
               <Table.ColumnHeader>Option A</Table.ColumnHeader>
               <Table.ColumnHeader>Option B</Table.ColumnHeader>
@@ -69,9 +106,10 @@ function AllQuestions() {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {questions?.map((question) => (
+            {filteredQuestions?.map((question) => (
               <Table.Row key={question.id}>
                 <Table.Cell>{question.id}</Table.Cell>
+                <Table.Cell>{question.q_type}</Table.Cell>
                 <Table.Cell>{question.question}</Table.Cell>
                 <Table.Cell>{question.option_a}</Table.Cell>
                 <Table.Cell>{question.option_b}</Table.Cell>
@@ -96,9 +134,10 @@ function AllQuestions() {
       </Box>
     </Box>
   );
-}
+};
 
 export default AllQuestions;
+
 function toast(arg0: {
   title: string;
   description: string;

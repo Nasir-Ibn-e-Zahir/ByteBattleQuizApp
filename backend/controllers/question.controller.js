@@ -2,16 +2,17 @@ const db = require("../models");
 
 exports.createQuestion = async (req, res) => {
   try {
-    const { question, option_a, option_b, option_c, option_d, correct_option } = req.body;
+    const { question, option_a, option_b, option_c, option_d, correct_option, q_type } = req.body;
 
     // Validate the incoming data
-    if (!question || !option_a || !option_b || !option_c || !option_d || !correct_option) {
+    if (!question || !option_a || !option_b || !option_c || !option_d || !correct_option || !q_type) {
       return res.status(400).json({ message: "All fields are required." });
     }
 
+    let new_q_type = q_type.toLowerCase()
     // Insert the new question into the database
     await db.Question.create({
-      q_type,
+      q_type: new_q_type,
       question,
       option_a,
       option_b,
@@ -36,6 +37,23 @@ exports.getAllQuestions = async (req, res) => {
     res.status(500).json({ error: "Failed to fetch all questions from the database." });
   }
 };
+
+exports.getAllQuestionType = async (req, res) => {
+  try {
+    // SELECT DISTINCT q_type FROM questions
+    const questionTypes = await db.Question.findAll({
+      attributes: [
+        [db.sequelize.fn('DISTINCT', db.sequelize.col('q_type')),
+          'question_type']
+      ],
+      raw: true,
+    });
+    res.status(200).json(questionTypes);
+  } catch (error) {
+    console.error("Error fetching question types:", error);
+    res.status(500).json({ error: "Failed to fetch question types" });
+  }
+}
 
 exports.destroyQuestion = async (req, res) => {
   const { id } = req.params;

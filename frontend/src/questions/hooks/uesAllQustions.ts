@@ -3,6 +3,7 @@ import axios from "../../services/axios";
 
 interface Question {
   id: number;
+  q_type: string;
   question: string;
   option_a: string;
   option_b: string;
