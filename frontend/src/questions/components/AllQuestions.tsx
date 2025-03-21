@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  HStack,
-  Spinner,
-  Table,
-  Text,
-  Select,
-} from "@chakra-ui/react";
+import { Box, Button, HStack, Spinner, Table, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import useAllQuestoins from "../hooks/uesAllQustions";
 import useDeleteQuestion from "../hooks/useDeleteQuestion";

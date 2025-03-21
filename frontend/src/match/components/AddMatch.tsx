@@ -16,15 +16,26 @@ import {
   FormErrorMessage,
   FormLabel,
 } from "@chakra-ui/form-control";
+import useAllQuestoin_type from "../../questions/hooks/useAllQuestion_type";
 
 export const AddMatch = () => {
   const { handleSubmit, register } = useForm<matchDataFormat>();
   const { mutate } = useAddMatch();
   const { data: teams, isLoading, isError } = useAllTeams();
+  const { data: q_types } = useAllQuestoin_type();
   const [teamSections, setTeamSections] = useState<
     { id: string; value: string }[]
   >([]);
   const [error, setError] = useState<string | null>(null);
+  const [selectedType, setSelectedType] = useState("");
+
+  const typeOptions = [
+    { value: "", lable: "All Types" },
+    ...(q_types?.map((t) => ({
+      value: t.question_type,
+      lable: t.question_type,
+    })) || []),
+  ];
 
   const submit = (data: matchDataFormat) => {
     // Check if any team dropdown is empty
@@ -115,9 +126,14 @@ export const AddMatch = () => {
             <select
               id="match_type"
               {...register("match_type", { required: true })}
+              value={selectedType}
+              onChange={(e) => setSelectedType(e.target.value)}
             >
-              <option value="ict">ICT</option>
-              <option value="general_knowledge">General Knowledge</option>
+              {typeOptions.map((q_type) => (
+                <option key={q_type.value} value={q_type.value}>
+                  {q_type.lable}
+                </option>
+              ))}
             </select>
           </FormControl>
 

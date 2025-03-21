@@ -52,6 +52,9 @@ function AllMatches() {
                     <Link to={`/match/${match.id}/scoreboard`}>Scoreboard</Link>
                   </Button>
                   <Button mx={3}>
+                    <Link to={`/match/${match.id}/quiz`}>Go to Quiz</Link>
+                  </Button>
+                  <Button mx={3}>
                     <Link to={`/match/${match.id}/edit`}>Edit</Link>
                   </Button>
                   <Button onClick={() => handleDeleteMatch(match.id)}>

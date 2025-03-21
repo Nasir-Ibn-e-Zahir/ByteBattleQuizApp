@@ -20,7 +20,8 @@ exports.createMatch = async (req, res) => {
         }
 
         // Create a new match record
-        const newMatch = await db.Match.create({ match_name, match_type });
+        const matchType = match_type.toLowerCase();
+        const newMatch = await db.Match.create({ match_name, match_type: matchType });
 
         // Create entries in the Team_Match table for each team participating in the match
         const teamMatchEntries = team_ids.map((team_id) => ({
