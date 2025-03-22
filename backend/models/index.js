@@ -31,11 +31,12 @@ fs
     db[model.name] = model;
   });
 
-db.User = require('./user')(sequelize,Sequelize.DataTypes)
-db.Question = require('./question')(sequelize,Sequelize.DataTypes)
-db.Team = require('./team')(sequelize,Sequelize.DataTypes)
-db.Match = require('./match')(sequelize,Sequelize.DataTypes)
-db.Team_Match = require('./team_match')(sequelize,Sequelize.DataTypes)
+db.User = require('./user')(sequelize, Sequelize.DataTypes)
+db.Question = require('./question')(sequelize, Sequelize.DataTypes)
+db.Team = require('./team')(sequelize, Sequelize.DataTypes)
+db.Match = require('./match')(sequelize, Sequelize.DataTypes)
+db.BuzzerPress = require('./buzzer_press')(sequelize, Sequelize.DataTypes)
+db.Team_Match = require('./team_match')(sequelize, Sequelize.DataTypes)
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {

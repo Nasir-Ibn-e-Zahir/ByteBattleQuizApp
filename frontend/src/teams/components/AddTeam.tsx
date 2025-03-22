@@ -42,8 +42,8 @@ const AddTeam = () => {
   };
 
   return (
-    <Box>
-      <Heading as="h2" size="lg" textAlign="center" mb={4}>
+    <Box maxW="2xl" mx="auto" bg="white" p={8} borderRadius="xl" boxShadow="lg">
+      <Heading size="xl" mb={6} textAlign="center" color="brand.secondary">
         Add New Team Here
       </Heading>
       <Text textAlign="center" color="gray.600" mb={6}>
@@ -52,9 +52,12 @@ const AddTeam = () => {
       <Box bg="gray.50" p={6} borderRadius="md">
         <form onSubmit={handleSubmit(submit)}>
           <Stack>
-            <FormControl isInvalid={!!errors.team_name}>
-              <FormLabel fontWeight="bold">Team Name</FormLabel>
+            <FormControl mb={6} isInvalid={!!errors.team_name}>
+              <FormLabel fontSize="sm" fontWeight="600" color="gray.600">
+                Team Name
+              </FormLabel>
               <Input
+                size="lg"
                 type="text"
                 placeholder="Enter the team name"
                 {...register("team_name", {
@@ -65,15 +68,17 @@ const AddTeam = () => {
               <FormErrorMessage>{errors.team_name?.message}</FormErrorMessage>
             </FormControl>
 
-            <FormControl isInvalid={!!errors.description}>
-              <FormLabel fontWeight="bold">Description</FormLabel>
+            <FormControl mb={6} isInvalid={!!errors.description}>
+              <FormLabel fontSize="sm" fontWeight="600" color="gray.600">
+                Description
+              </FormLabel>
               <Textarea
+                size="lg"
                 placeholder="Enter a brief description of the team"
                 {...register("description", {
                   required: "Description is required",
                 })}
                 _focus={{ borderColor: "skyblue" }} // Sky-blue border on focus
-                size="md"
                 resize="vertical"
               />
               <FormErrorMessage>{errors.description?.message}</FormErrorMessage>

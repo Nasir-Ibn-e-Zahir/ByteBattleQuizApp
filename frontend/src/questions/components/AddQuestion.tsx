@@ -4,7 +4,6 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/form-control";
 import { Box, Button, Heading, Input, Stack, Text } from "@chakra-ui/react";
-import { useColorModeValue } from "@chakra-ui/color-mode";
 import { useForm } from "react-hook-form";
 import useAddQuestion, { questionDataFormat } from "../hooks/useAddQuestion";
 
@@ -20,22 +19,23 @@ const AddQuestion = () => {
     mutate(data);
   };
 
-  const formBg = useColorModeValue("gray.50", "gray.700");
-
   return (
-    <Box>
-      <Heading as="h2" size="xl" textAlign="center" mb={4} fontWeight="bold">
-        Add a New Question
+    <Box maxW="2xl" mx="auto" bg="white" p={8} borderRadius="xl" boxShadow="lg">
+      <Heading size="xl" mb={6} textAlign="center" color="gray">
+        Add New Question
       </Heading>
       <Text textAlign="center" color="gray.600" ml={10} mr={5} mb={6}>
         Please fill the following fields to create a new question in the Quiz.
       </Text>
-      <Box bg={formBg} p={6} borderRadius="md">
+      <Box p={6}>
         <form onSubmit={handleSubmit(submit)}>
           <Stack>
-            <FormControl isInvalid={!!errors.q_type}>
-              <FormLabel fontWeight="bold">Question Type</FormLabel>
+            <FormControl mb={6} isInvalid={!!errors.q_type}>
+              <FormLabel fontSize="sm" fontWeight="600" color="gray.600">
+                Question Type
+              </FormLabel>
               <Input
+                size="lg"
                 type="text"
                 placeholder="e.g., General Knowledge, English, Computer Science, ..."
                 {...register("q_type", {
@@ -62,9 +62,12 @@ const AddQuestion = () => {
                 {errors.q_type?.message}
               </FormErrorMessage>
             </FormControl>
-            <FormControl isInvalid={!!errors.question}>
-              <FormLabel fontWeight="bold">Question</FormLabel>
+            <FormControl mb={6} isInvalid={!!errors.question}>
+              <FormLabel fontSize="sm" fontWeight="600" color="gray.600">
+                Question
+              </FormLabel>
               <Input
+                size="lg"
                 type="text"
                 placeholder="e.g., Who is the president of the USA?"
                 {...register("question", {
@@ -92,9 +95,12 @@ const AddQuestion = () => {
               </FormErrorMessage>
             </FormControl>
 
-            <FormControl isInvalid={!!errors.option_a}>
-              <FormLabel fontWeight="bold">Option A</FormLabel>
+            <FormControl mb={6} isInvalid={!!errors.option_a}>
+              <FormLabel fontSize="sm" fontWeight="600" color="gray.600">
+                Option A
+              </FormLabel>
               <Input
+                size="lg"
                 type="text"
                 placeholder="e.g., Joe Biden"
                 {...register("option_a", { required: "Option A is required" })}
@@ -120,9 +126,12 @@ const AddQuestion = () => {
               </FormErrorMessage>
             </FormControl>
 
-            <FormControl isInvalid={!!errors.option_b}>
-              <FormLabel fontWeight="bold">Option B</FormLabel>
+            <FormControl mb={6} isInvalid={!!errors.option_b}>
+              <FormLabel fontSize="sm" fontWeight="600" color="gray.600">
+                Option B
+              </FormLabel>
               <Input
+                size="lg"
                 type="text"
                 placeholder="e.g., Donald Trump"
                 {...register("option_b", { required: "Option B is required" })}
@@ -148,9 +157,12 @@ const AddQuestion = () => {
               </FormErrorMessage>
             </FormControl>
 
-            <FormControl isInvalid={!!errors.option_c}>
-              <FormLabel fontWeight="bold">Option C</FormLabel>
+            <FormControl mb={6} isInvalid={!!errors.option_c}>
+              <FormLabel fontSize="sm" fontWeight="600" color="gray.600">
+                Option C
+              </FormLabel>
               <Input
+                size="lg"
                 type="text"
                 placeholder="e.g., Barack Obama"
                 {...register("option_c", { required: "Option C is required" })}
@@ -176,9 +188,12 @@ const AddQuestion = () => {
               </FormErrorMessage>
             </FormControl>
 
-            <FormControl isInvalid={!!errors.option_d}>
-              <FormLabel fontWeight="bold">Option D</FormLabel>
+            <FormControl mb={6} isInvalid={!!errors.option_d}>
+              <FormLabel fontSize="sm" fontWeight="600" color="gray.600">
+                Option D
+              </FormLabel>
               <Input
+                size="lg"
                 type="text"
                 placeholder="e.g., Kamala Harris"
                 {...register("option_d", { required: "Option D is required" })}
@@ -204,9 +219,12 @@ const AddQuestion = () => {
               </FormErrorMessage>
             </FormControl>
 
-            <FormControl isInvalid={!!errors.correct_option}>
-              <FormLabel fontWeight="bold">Correct Option</FormLabel>
+            <FormControl mb={6} isInvalid={!!errors.correct_option}>
+              <FormLabel fontSize="sm" fontWeight="600" color="gray.600">
+                Correct Option
+              </FormLabel>
               <Input
+                size="lg"
                 type="text"
                 placeholder="e.g., A"
                 {...register("correct_option", {

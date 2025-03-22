@@ -4,18 +4,20 @@ import {
   Box,
   Button,
   Heading,
-  HStack,
+  Flex,
   List,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import useAllQuestoins, { Question } from "../questions/hooks/uesAllQustions";
 import { useState } from "react";
+import useAllBuzzers from "../buzzer/hooks/useAllBuzzers";
 
 function MainScreen() {
   const { id } = useParams();
-  const { data: match, isError, isLoading } = useSingleMatch(id);
+  const { data: match } = useSingleMatch(id);
   const { data: questions } = useAllQuestoins();
+  const { data: buzzers, error, isLoading } = useAllBuzzers();
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [previousQuestion, setPreviousQuestion] = useState<number[]>([]);
   const [correctOption, setCorrectOption] = useState("");
@@ -80,23 +82,39 @@ function MainScreen() {
       document.body.style.backgroundColor = "red";
     }
   };
+  let tCount = 1;
 
   return (
-    <HStack>
-      <Box>
-        <Heading>Score Board</Heading>
+    <Flex
+      minH="100vh"
+      p={8}
+      gap={8}
+      bg="gray.50"
+      justifyContent="space-between"
+    >
+      <Box bg="white" p={6} borderRadius="xl" boxShadow="lg" w="300px">
+        <Heading size="lg" mb={4} color="brand.secondary">
+          Score Board
+        </Heading>
         <List.Root>
           {match?.rounds.map((round) => (
-            <Box key={`round-${round.id}`}>
-              <List.Item key={`${round.id}-team`}>
-                {round.teams.team_name}
-              </List.Item>
-              <List.Item key={`${round.id}-score`}>{round.score}</List.Item>
+            <Box key={round.id} bg="gray.50" p={3} borderRadius="md">
+              <Text fontWeight="600">{round.teams.team_name}</Text>
+              <Text fontSize="2xl" color="brand.primary">
+                {round.score}
+              </Text>
             </Box>
           ))}
         </List.Root>
       </Box>
-      <Box id="questionBox">
+      <Box
+        flex={1}
+        maxW="800px"
+        bg="white"
+        p={8}
+        borderRadius="xl"
+        boxShadow="lg"
+      >
         {currentQuestion ? (
           <Box mt={4}>
             <Text fontSize="xl" fontWeight={"bold"} mb={2}>
@@ -129,9 +147,10 @@ function MainScreen() {
                       onClick={() => handleCorrectOption(optionValue as string)}
                       background={background}
                       variant={isActive ? "solid" : "outline"}
+                      size="lg"
+                      w="full"
                       justifyContent="flex-start"
-                      _hover={{ transform: "scale(1.02)" }}
-                      transition="all 0.2s"
+                      _hover={{ transform: "translateY(-2px)" }}
                     >
                       {String.fromCharCode(65 + index)}) {optionValue}
                     </Button>
@@ -177,8 +196,20 @@ function MainScreen() {
           ""
         )}
       </Box>
-      <Box>{/* for buzzers */}</Box>
-    </HStack>
+      <Box bg="white" p={6} borderRadius="xl" boxShadow="lg" w="300px">
+        <Heading size="lg" mb={4} color="brand.secondary">
+          Buzzer Queue
+        </Heading>
+        {buzzers?.map((buzzer) => (
+          <Box key={buzzer.id} bg="gray.50" p={3} mb={2} borderRadius="md">
+            <Text fontWeight="500">{buzzer.teamName}</Text>
+            <Text fontSize="sm" color="gray.500">
+              {new Date(buzzer.timestamp).toLocaleTimeString()}
+            </Text>
+          </Box>
+        ))}
+      </Box>
+    </Flex>
   );
 }
 

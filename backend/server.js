@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const db = require('./models')
+const buzzerRouter = require("./routes/buzzer.route")
 const teamRouter = require("./routes/team.route")
 const questionRouter = require('./routes/question.route')
 const matchRouter = require('./routes/match.route')
@@ -34,6 +35,7 @@ app.use("/api/refresh_token", refreshTokenRouter)
 app.use("/api/team", teamRouter)
 app.use("/api/match", matchRouter)
 app.use("/api/question", questionRouter)
+app.use("/api/buzzer", buzzerRouter)
 db.sequelize.sync().then(() => {
 
     app.listen(port, (req, res) => {
