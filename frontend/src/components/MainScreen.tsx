@@ -8,10 +8,12 @@ import {
   Text,
   VStack,
   SimpleGrid,
+  Image,
 } from "@chakra-ui/react";
 import useAllQuestoins, { Question } from "../questions/hooks/uesAllQustions";
 import { useState } from "react";
 import useAllBuzzers from "../buzzer/hooks/useAllBuzzers";
+import byteBattleLogo from "../assets/logo.jpg";
 
 // (Optional) If you have a ByteBattle24 logo image, import it here
 // import byteBattleLogo from "../assets/byteBattle24.png";
@@ -103,7 +105,7 @@ function MainScreen() {
         p={6}
         borderRadius="xl"
         boxShadow="md"
-        w="300px"
+        maxW="auto"
         position="sticky"
         top={4}
         height="fit-content"
@@ -129,10 +131,10 @@ function MainScreen() {
               align="center"
               boxShadow="sm"
             >
-              <Text fontWeight="600" color="gray.700">
+              <Text fontWeight="600" fontSize="xl" color="blue">
                 {round.teams.team_name}
               </Text>
-              <Text fontSize="2xl" fontWeight="bold" color="gray.800">
+              <Text ml={7} fontSize="3xl" fontWeight="bold" color="gray.800">
                 {round.score}
               </Text>
             </Flex>
@@ -143,7 +145,7 @@ function MainScreen() {
       {/* Main Question Area */}
       <Box
         flex={1}
-        maxW="800px"
+        maxW="auto"
         bg="white"
         p={6}
         borderRadius="xl"
@@ -153,17 +155,16 @@ function MainScreen() {
         border="4px solid gold"
       >
         {/* Optional ByteBattle24 Logo at the top */}
-        {/* 
-          <Box textAlign="center">
-            <Image
-              src={byteBattleLogo}
-              alt="ByteBattle24 Logo"
-              mx="auto"
-              mb={4}
-              height="80px"
-            />
-          </Box>
-        */}
+
+        <Box textAlign="center">
+          <Image
+            src={byteBattleLogo}
+            alt="ByteBattle24 Logo"
+            mx="auto"
+            mb={4}
+            height="300px"
+          />
+        </Box>
 
         {currentQuestion ? (
           <Box mt={4} textAlign="center">
@@ -179,7 +180,6 @@ function MainScreen() {
               {currentQuestion.question}
             </Heading>
 
-            {/* Answer options in a 2x2 grid to match screenshot style */}
             <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
               {["option_a", "option_b", "option_c", "option_d"].map(
                 (optionKey, index) => {
@@ -190,8 +190,7 @@ function MainScreen() {
                   const isCorrect =
                     optionValue === currentQuestion?.correct_option;
 
-                  // Decide background color
-                  let background = "gold"; // a gold-like color
+                  let background = "gold";
                   if (showCorrectAnswer && isCorrect) {
                     background = "green";
                   } else if (isActive) {
@@ -205,7 +204,7 @@ function MainScreen() {
                       bg={background}
                       color="white"
                       size="lg"
-                      height="60px"
+                      height="100px"
                       borderRadius="md"
                       _hover={{ bg: "#dcbf3e" }}
                       fontWeight="bold"
@@ -275,7 +274,7 @@ function MainScreen() {
         p={6}
         borderRadius="xl"
         boxShadow="md"
-        w="200px"
+        maxW="auto"
         position="sticky"
         top={4}
         height="fit-content"
@@ -294,7 +293,7 @@ function MainScreen() {
               borderLeft="3px solid red"
               boxShadow="sm"
             >
-              <Text fontWeight="600" color="gray.700">
+              <Text fontSize="xl" fontWeight="600" color="blue">
                 {buzzer.teamName}
               </Text>
               <Text fontSize="sm" color="gray.500">

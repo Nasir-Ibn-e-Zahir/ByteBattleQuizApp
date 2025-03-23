@@ -5,28 +5,17 @@ import useDeleteTeam from "../hooks/useDeleteTeam";
 
 function AllTeams() {
   const { data: teams, error, isLoading } = useAllTeams();
-
   const { mutate: deleteTeam } = useDeleteTeam();
 
   const handleDeleteTeam = (id: number) => {
     deleteTeam(id, {
       onSuccess: () => {
-        toast({
-          title: "Team deleted.",
-          description: `Team with ID ${id} has been deleted successfully.`,
-          status: "success",
-          duration: 5000,
-          isClosable: true,
-        });
+        // Replace this with your toast implementation
+        console.log(`Team with ID ${id} has been deleted successfully.`);
       },
-      onError: (error) => {
-        toast({
-          title: "Error deleting team.",
-          description: `Failed to delete team with ID ${id}. ${error.message}`,
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
+      onError: (error: any) => {
+        // Replace this with your toast implementation
+        console.error(`Failed to delete team with ID ${id}. ${error.message}`);
       },
     });
   };
@@ -49,64 +38,68 @@ function AllTeams() {
     );
   }
 
-  if (!teams || teams.length === 0) {
-    return (
-      <Box>
-        <Box textAlign="center" my={5}>
-          <Text>No teams available.</Text>
-        </Box>
-        <Button>
-          <Link to={"/team/add_team"}>Add New Team</Link>
-        </Button>
-      </Box>
-    );
-  }
-
   return (
-    <Box>
-      <Button>
+    <Box
+      maxW="container.lg"
+      mx="auto"
+      p={6}
+      bg="white"
+      borderRadius="xl"
+      boxShadow="md"
+    >
+      <Button mb={4} bg="#C9A834" color="black" _hover={{ bg: "#dcbf3e" }}>
         <Link to={"/team/add_team"}>Add New Team</Link>
       </Button>
 
-      <Box>
-        <Table.Root>
-          <Table.Header>
-            <Table.Row>
-              <Table.ColumnHeader>ID</Table.ColumnHeader>
-              <Table.ColumnHeader>Name</Table.ColumnHeader>
-              <Table.ColumnHeader>Description</Table.ColumnHeader>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {teams.map((team) => (
-              <Table.Row key={team.id}>
-                <Table.Cell>{team.id}</Table.Cell>
-                <Table.Cell>{team.team_name}</Table.Cell>
-                <Table.Cell>{team.description}</Table.Cell>
-                <Table.Cell>
-                  <Button onClick={() => handleDeleteTeam(team.id)}>
-                    delete
-                  </Button>
-                  <Button background={"blue.600"}>
-                    <Link to={`/team/${team.id}/edit`}>Edit</Link>
-                  </Button>
-                </Table.Cell>
+      {teams && teams.length > 0 ? (
+        <Box overflowX="auto">
+          <Table.Root variant="line">
+            <Table.Header bg="gray.100">
+              <Table.Row>
+                <Table.ColumnHeader>ID</Table.ColumnHeader>
+                <Table.ColumnHeader>Name</Table.ColumnHeader>
+                <Table.ColumnHeader>Description</Table.ColumnHeader>
+                <Table.ColumnHeader>Actions</Table.ColumnHeader>
               </Table.Row>
-            ))}
-          </Table.Body>
-        </Table.Root>
-      </Box>
+            </Table.Header>
+            <Table.Body>
+              {teams.map((team) => (
+                <Table.Row key={team.id} _hover={{ bg: "gray.50" }}>
+                  <Table.Cell>{team.id}</Table.Cell>
+                  <Table.Cell>{team.team_name}</Table.Cell>
+                  <Table.Cell>{team.description}</Table.Cell>
+                  <Table.Cell>
+                    <Button
+                      mr={2}
+                      size="sm"
+                      bg="#C9A834"
+                      color="black"
+                      _hover={{ bg: "#dcbf3e" }}
+                      onClick={() => handleDeleteTeam(team.id)}
+                    >
+                      Delete
+                    </Button>
+                    <Button
+                      size="sm"
+                      bg="blue.600"
+                      color="white"
+                      _hover={{ bg: "blue.500" }}
+                    >
+                      <Link to={`/team/${team.id}/edit`}>Edit</Link>
+                    </Button>
+                  </Table.Cell>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table.Root>
+        </Box>
+      ) : (
+        <Box textAlign="center" my={5}>
+          <Text>No teams available.</Text>
+        </Box>
+      )}
     </Box>
   );
 }
 
 export default AllTeams;
-function toast(_arg0: {
-  title: string;
-  description: string;
-  status: string;
-  duration: number;
-  isClosable: boolean;
-}) {
-  throw new Error("Function not implemented.");
-}

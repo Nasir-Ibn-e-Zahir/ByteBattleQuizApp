@@ -17,38 +17,69 @@ function Login() {
 
   const mutation = useLogin();
 
-  const OnSubmit = (data: any) => {
+  const onSubmit = (data: UserLoginData) => {
     mutation.mutate(data);
     console.log(data.password);
   };
 
   return (
-    <Box>
-      <Heading fontSize="28px" paddingY="30px" textAlign="center">
+    <Box
+      maxW="sm"
+      mx="auto"
+      bg="white"
+      p={8}
+      mt={8}
+      borderRadius="xl"
+      boxShadow="lg"
+    >
+      <Heading fontSize="28px" py="30px" textAlign="center" color="gray.800">
         Log In
       </Heading>
-      <form onSubmit={handleSubmit(OnSubmit)}>
-        <FormControl isInvalid={!!errors.email} paddingY="20px">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <FormControl isInvalid={!!errors.email} py="20px">
           <FormLabel>Email</FormLabel>
           <Input
             {...register("email")}
             type="email"
             placeholder="Johndoe@gmail.com"
+            bg="gray.50"
+            borderColor="#C9A834"
+            _hover={{ borderColor: "#dcbf3e" }}
+            _focus={{
+              outline: "none",
+              borderColor: "#C9A834",
+              boxShadow: "0 0 0 3px rgba(201,168,52,0.5)",
+            }}
           />
-          <FormErrorMessage>{errors.email?.message as String}</FormErrorMessage>
+          <FormErrorMessage>{errors.email?.message as string}</FormErrorMessage>
         </FormControl>
-        <FormControl isInvalid={!!errors.password} paddingY="20px">
+        <FormControl isInvalid={!!errors.password} py="20px">
           <FormLabel>Password</FormLabel>
           <Input
             {...register("password")}
             type="password"
             placeholder="********"
+            bg="gray.50"
+            borderColor="#C9A834"
+            _hover={{ borderColor: "#dcbf3e" }}
+            _focus={{
+              outline: "none",
+              borderColor: "#C9A834",
+              boxShadow: "0 0 0 3px rgba(201,168,52,0.5)",
+            }}
           />
           <FormErrorMessage>
-            {errors.password?.message as String}
+            {errors.password?.message as string}
           </FormErrorMessage>
         </FormControl>
-        <Button type="submit" paddingY="20px">
+        <Button
+          type="submit"
+          py="20px"
+          bg="#C9A834"
+          color="black"
+          _hover={{ bg: "#dcbf3e" }}
+          width="full"
+        >
           Login
         </Button>
       </form>

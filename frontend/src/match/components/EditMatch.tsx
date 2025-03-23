@@ -32,16 +32,13 @@ export const EditMatch = () => {
   const [error, setError] = useState<string | null>(null);
 
   const submit = (data: matchDataFormat) => {
-    // Check if any team dropdown is empty
     const invalidTeams = teamSections.some((section) => !section.value);
-
     if (invalidTeams) {
       setError("Please select a team for each dropdown.");
       return;
     }
     setError(null);
-
-    const teamIds = teamSections.map((section) => section.value); // Extract selected team IDs
+    const teamIds = teamSections.map((section) => section.value);
     const submitData = {
       ...data,
       team_ids: teamIds,
@@ -50,38 +47,29 @@ export const EditMatch = () => {
     mutate(submitData);
   };
 
-  // Function to add a new team section
   const handleAddTeam = () => {
-    const newTeamDiv = {
-      id: Date.now().toString(),
-      value: "",
-    };
-    setTeamSections((prevSections) => [...prevSections, newTeamDiv]);
+    const newTeamDiv = { id: Date.now().toString(), value: "" };
+    setTeamSections((prev) => [...prev, newTeamDiv]);
   };
 
-  // Function to handle team selection change
   const handleTeamChange = (id: string, value: string) => {
-    setTeamSections((prevSections) =>
-      prevSections.map((section) =>
+    setTeamSections((prev) =>
+      prev.map((section) =>
         section.id === id ? { ...section, value } : section
       )
     );
   };
 
-  // Function to remove a team section
   const handleRemoveTeam = (id: string) => {
-    setTeamSections((prevSections) =>
-      prevSections.filter((section) => section.id !== id)
-    );
+    setTeamSections((prev) => prev.filter((section) => section.id !== id));
   };
-  // Real-time error removal
+
   useEffect(() => {
     if (teamSections.every((section) => section.value)) {
-      setError(null); // Clear error if all dropdowns are valid
+      setError(null);
     }
   }, [teamSections]);
 
-  // Handle loading and error states
   if (isLoading) {
     return (
       <Box textAlign="center" mt={6}>
@@ -89,7 +77,6 @@ export const EditMatch = () => {
       </Box>
     );
   }
-
   if (isError) {
     return (
       <Box textAlign="center" mt={6}>
@@ -99,12 +86,13 @@ export const EditMatch = () => {
   }
 
   return (
-    <Box>
-      <Heading as="h2" size="lg" textAlign="center" mb={6}>
+    <Box maxW="2xl" mx="auto" bg="white" p={8} borderRadius="xl" boxShadow="lg">
+      <Heading as="h2" size="xl" textAlign="center" mb={6} color="gray.800">
         Update Match
       </Heading>
       <form onSubmit={handleSubmit(submit)}>
-        <VStack align="stretch">
+        <VStack align="stretch" gap={4}>
+          {/* Match Name Input */}
           <FormControl>
             <FormLabel>Enter Match Name</FormLabel>
             <Input
@@ -112,32 +100,75 @@ export const EditMatch = () => {
               type="text"
               placeholder="Enter match name"
               {...register("match_name", { required: true })}
-              borderColor="blue.500"
+              borderColor="#C9A834"
+              _hover={{ borderColor: "#dcbf3e" }}
+              _focus={{
+                outline: "none",
+                borderColor: "#C9A834",
+                boxShadow: "0 0 0 3px rgba(201,168,52,0.5)",
+              }}
             />
           </FormControl>
 
-          <FormControl>
-            <FormLabel>Select Match Type</FormLabel>
-            <select
-              id="match_type"
-              {...register("match_type", { required: true })}
-            >
-              <option value={match?.match_type}>{match?.match_type}</option>
-              <option value="ICT">ICT</option>
-              <option value="General Knowledge">General Knowledge</option>
-            </select>
-          </FormControl>
+          {/* Row with Match Type on left and Add Team on right */}
+          <HStack gap={4}>
+            <Box flex={1}>
+              <FormControl>
+                <FormLabel>Select Match Type</FormLabel>
+                {/* Using native select tag */}
+                <select
+                  {...register("match_type", { required: true })}
+                  defaultValue={match?.match_type}
+                  style={{
+                    width: "100%",
+                    padding: "0.5rem",
+                    borderRadius: "0.375rem",
+                    border: "2px solid #C9A834",
+                  }}
+                >
+                  <option value="">
+                    {match?.match_type || "Select match type"}
+                  </option>
+                  <option value="ICT">ICT</option>
+                  <option value="General Knowledge">General Knowledge</option>
+                </select>
+              </FormControl>
+            </Box>
+            <Box flex={1}>
+              <FormControl>
+                <FormLabel>Add Team</FormLabel>
+                <Button
+                  onClick={handleAddTeam}
+                  bg="blue.700"
+                  color="white"
+                  variant="outline"
+                  size="sm"
+                  _hover={{ bg: "blue.600" }}
+                  width="100%"
+                >
+                  Add Team
+                </Button>
+              </FormControl>
+            </Box>
+          </HStack>
 
+          {/* Team Sections */}
           <FormControl isInvalid={!!error}>
-            <VStack align="stretch" id="teamSection">
+            <VStack align="stretch">
               {teamSections.map((section, index) => (
-                <HStack key={section.id} align="center">
+                <HStack key={section.id}>
                   <select
                     id={`team_${index}`}
                     value={section.value}
                     onChange={(e) =>
                       handleTeamChange(section.id, e.target.value)
                     }
+                    style={{
+                      width: "100%",
+                      padding: "0.5rem",
+                      borderRadius: "0.375rem",
+                      border: "2px solid #C9A834",
+                    }}
                   >
                     <option value="">Select a team</option>
                     {teams?.map((team) => (
@@ -148,8 +179,10 @@ export const EditMatch = () => {
                   </select>
                   <Button
                     size="sm"
-                    background={"red.600"}
+                    bg="red.600"
+                    color="white"
                     onClick={() => handleRemoveTeam(section.id)}
+                    _hover={{ bg: "red.500" }}
                   >
                     Remove
                   </Button>
@@ -157,24 +190,20 @@ export const EditMatch = () => {
               ))}
             </VStack>
             {error && (
-              <FormErrorMessage paddingTop={10} textColor={"red"}>
+              <FormErrorMessage pt={4} color="red.500">
                 {error}
               </FormErrorMessage>
             )}
-
-            <Button
-              mt={4}
-              onClick={handleAddTeam}
-              background="blue.700"
-              color={"white"}
-              variant="outline"
-              size="sm"
-            >
-              Add Team
-            </Button>
           </FormControl>
 
-          <Button mt="20px" type="submit" size={"sm"} width={"150px"}>
+          <Button
+            mt={6}
+            type="submit"
+            size="md"
+            bg="#C9A834"
+            color="black"
+            _hover={{ bg: "#dcbf3e" }}
+          >
             Submit
           </Button>
         </VStack>

@@ -1,5 +1,5 @@
-import { Box, Button, Span, Table } from "@chakra-ui/react";
-import { List, ListItem } from "@chakra-ui/react";
+import { Box, Button, Table } from "@chakra-ui/react";
+import { List, ListItem, Span } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import useAllMatches from "../hooks/useAllMatches";
 import useDeleteMatch from "../hooks/useDeleteMatch";
@@ -12,18 +12,34 @@ function AllMatches() {
     deleteMatch(id);
   };
 
-  if (isLoading) return <Box>Loading...</Box>;
-  if (isError) return <Box>Error loading matches</Box>;
+  if (isLoading)
+    return (
+      <Box textAlign="center" mt={6}>
+        Loading...
+      </Box>
+    );
+  if (isError)
+    return (
+      <Box textAlign="center" mt={6}>
+        Error loading matches.
+      </Box>
+    );
 
   return (
-    <Box>
-      <Button mb={15}>
+    <Box
+      maxW="container.lg"
+      mx="auto"
+      p={6}
+      bg="white"
+      borderRadius="xl"
+      boxShadow="md"
+    >
+      <Button mb={4} bg="#C9A834" color="black" _hover={{ bg: "#dcbf3e" }}>
         <Link to={"/match/add_match"}>Create New Match</Link>
       </Button>
-
-      <Box>
-        <Table.Root>
-          <Table.Header>
+      <Box overflowX="auto">
+        <Table.Root variant="line">
+          <Table.Header bg="gray.100">
             <Table.Row>
               <Table.ColumnHeader>ID</Table.ColumnHeader>
               <Table.ColumnHeader>Match Name</Table.ColumnHeader>
@@ -33,7 +49,7 @@ function AllMatches() {
           </Table.Header>
           <Table.Body>
             {matches?.map((match) => (
-              <Table.Row key={match.id}>
+              <Table.Row key={match.id} _hover={{ bg: "gray.50" }}>
                 <Table.Cell>{match.id}</Table.Cell>
                 <Table.Cell>{match.match_name}</Table.Cell>
                 <Table.Cell>{match.match_type}</Table.Cell>
@@ -42,22 +58,46 @@ function AllMatches() {
                     {match.rounds?.map((round) => (
                       <ListItem key={round.teams.id}>
                         {round.teams.team_name}
-                        <Span paddingLeft={5}>Score: {round.score}</Span>
+                        <Span pl={5}>Score: {round.score}</Span>
                       </ListItem>
                     ))}
                   </List.Root>
                 </Table.Cell>
                 <Table.Cell>
-                  <Button>
+                  <Button
+                    size="sm"
+                    mr={2}
+                    bg="#C9A834"
+                    color="black"
+                    _hover={{ bg: "#dcbf3e" }}
+                  >
                     <Link to={`/match/${match.id}/scoreboard`}>Scoreboard</Link>
                   </Button>
-                  <Button mx={3}>
+                  <Button
+                    size="sm"
+                    mx={2}
+                    bg="blue.600"
+                    color="white"
+                    _hover={{ bg: "blue.500" }}
+                  >
                     <Link to={`/match/${match.id}/quiz`}>Go to Quiz</Link>
                   </Button>
-                  <Button mx={3}>
+                  <Button
+                    size="sm"
+                    mx={2}
+                    bg="blue.600"
+                    color="white"
+                    _hover={{ bg: "blue.500" }}
+                  >
                     <Link to={`/match/${match.id}/edit`}>Edit</Link>
                   </Button>
-                  <Button onClick={() => handleDeleteMatch(match.id)}>
+                  <Button
+                    size="sm"
+                    onClick={() => handleDeleteMatch(match.id)}
+                    bg="red.600"
+                    color="white"
+                    _hover={{ bg: "red.500" }}
+                  >
                     Delete
                   </Button>
                 </Table.Cell>

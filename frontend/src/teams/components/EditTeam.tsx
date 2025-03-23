@@ -14,14 +14,11 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/form-control";
 import { useForm } from "react-hook-form";
-import { TeamAdditionData, teamdata } from "../hooks/useAddTeam";
+import { TeamAdditionData } from "../hooks/useAddTeam";
 import { useNavigate, useParams } from "react-router-dom";
-import { zodResolver } from "@hookform/resolvers/zod";
+// import { zodResolver } from "@hookform/resolvers/zod";
 import useEditTeam from "../hooks/useEditTeam";
 import { useEffect } from "react";
-
-const formShadow = "md";
-const bgColor = "white";
 
 const EditTeam = () => {
   const { id } = useParams();
@@ -32,7 +29,7 @@ const EditTeam = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<TeamAdditionData>({ resolver: zodResolver(teamdata) });
+  } = useForm<TeamAdditionData>();
 
   const { mutation, team, isError, isLoading } = useEditTeam(id, reset);
 
@@ -70,18 +67,20 @@ const EditTeam = () => {
   }
 
   return (
-    <Box>
-      <Heading as="h2" size="lg" textAlign="center" mb={4}>
-        Edit Team Here
+    <Box maxW="2xl" mx="auto" bg="white" p={8} borderRadius="xl" boxShadow="lg">
+      <Heading as="h2" size="xl" textAlign="center" mb={6} color="gray.800">
+        Edit Team
       </Heading>
       <Text textAlign="center" color="gray.600" mb={6}>
-        Please edit the details below to update the team.
+        Please update the details below to modify the team.
       </Text>
-      <Box bg="gray.50" p={6} borderRadius="md">
+      <Box p={6} borderRadius="md">
         <form onSubmit={handleSubmit(submit)}>
-          <Stack>
+          <Stack gap={4}>
             <FormControl isInvalid={!!errors.team_name}>
-              <FormLabel fontWeight="bold">Team Name</FormLabel>
+              <FormLabel fontWeight="bold" color="gray.700">
+                Team Name
+              </FormLabel>
               <Input
                 defaultValue={team?.team_name}
                 type="text"
@@ -89,37 +88,36 @@ const EditTeam = () => {
                 {...register("team_name", {
                   required: "Team name is required",
                 })}
-                _focus={{ borderColor: "skyblue" }}
+                _focus={{ borderColor: "#C9A834" }}
               />
               <FormErrorMessage>{errors.team_name?.message}</FormErrorMessage>
             </FormControl>
 
             <FormControl isInvalid={!!errors.description}>
-              <FormLabel fontWeight="bold">Description</FormLabel>
+              <FormLabel fontWeight="bold" color="gray.700">
+                Description
+              </FormLabel>
               <Textarea
                 defaultValue={team?.description}
                 placeholder="Enter a brief description of the team"
                 {...register("description", {
                   required: "Description is required",
                 })}
-                _focus={{ borderColor: "skyblue" }}
-                size="md"
+                _focus={{ borderColor: "#C9A834" }}
                 resize="vertical"
               />
               <FormErrorMessage>{errors.description?.message}</FormErrorMessage>
             </FormControl>
 
             <Button
-              colorScheme="blue"
+              bg="#C9A834"
+              color="black"
               size="lg"
               type="submit"
-              // isLoading={mutation.isLoading}
-              _hover={{
-                bg: "teal.600",
-              }}
+              _hover={{ bg: "#dcbf3e" }}
               width="full"
             >
-              Edit
+              Save Changes
             </Button>
           </Stack>
         </form>

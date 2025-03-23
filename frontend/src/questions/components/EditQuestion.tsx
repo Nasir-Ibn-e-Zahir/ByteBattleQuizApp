@@ -12,13 +12,11 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useColorModeValue } from "@chakra-ui/color-mode";
 import { useForm } from "react-hook-form";
-import { questionData, questionDataFormat } from "../hooks/useAddQuestion";
 import { useNavigate, useParams } from "react-router-dom";
-import { zodResolver } from "@hookform/resolvers/zod";
 import useEditQuestion from "../hooks/useEditQuestion";
 import { useEffect } from "react";
+import { questionDataFormat } from "../hooks/useAddQuestion";
 
 const EditQuestion = () => {
   const { id } = useParams();
@@ -29,7 +27,7 @@ const EditQuestion = () => {
     register,
     reset,
     formState: { errors },
-  } = useForm<questionDataFormat>({ resolver: zodResolver(questionData) });
+  } = useForm<questionDataFormat>();
   const { mutation, question, isError, isLoading } = useEditQuestion(id, reset);
 
   useEffect(() => {
@@ -43,7 +41,8 @@ const EditQuestion = () => {
   const submit = (data: questionDataFormat) => {
     mutation.mutate(data, {
       onSuccess: () => {
-        reset(), navigate("/question/all_questions");
+        reset();
+        navigate("/question/all_questions");
       },
     });
   };
@@ -66,21 +65,21 @@ const EditQuestion = () => {
     );
   }
 
-  const formBg = useColorModeValue("gray.50", "gray.700");
-
   return (
-    <Box>
-      <Heading as="h2" size="xl" textAlign="center" mb={4} fontWeight="bold">
-        Add a New Question
+    <Box maxW="2xl" mx="auto" bg="white" p={8} borderRadius="xl" boxShadow="lg">
+      <Heading as="h2" size="xl" textAlign="center" mb={6} color="gray.800">
+        Edit Question
       </Heading>
-      <Text textAlign="center" color="gray.600" ml={10} mr={5} mb={6}>
-        Please fill the following fields to create a new question in the Quiz.
+      <Text textAlign="center" color="gray.600" mb={6}>
+        Update the fields below to modify the question.
       </Text>
-      <Box bg={formBg} p={6} borderRadius="md">
+      <Box p={6} borderRadius="md">
         <form onSubmit={handleSubmit(submit)}>
-          <Stack>
+          <Stack gap={4}>
             <FormControl isInvalid={!!errors.question}>
-              <FormLabel fontWeight="bold">Question</FormLabel>
+              <FormLabel fontWeight="bold" color="gray.700">
+                Question
+              </FormLabel>
               <Input
                 defaultValue={question?.question}
                 type="text"
@@ -92,132 +91,65 @@ const EditQuestion = () => {
                 borderRadius="md"
                 border="2px solid"
                 borderColor="gray.300"
-                _hover={{
-                  borderColor: "blue.400",
-                }}
+                _hover={{ borderColor: "#C9A834" }}
                 _focus={{
                   outline: "none",
-                  borderColor: "blue.500",
-                  boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.5)",
+                  borderColor: "#C9A834",
+                  boxShadow: "0 0 0 3px rgba(201, 168, 52, 0.5)",
                 }}
-                _placeholder={{
-                  color: "gray.400",
-                }}
+                _placeholder={{ color: "gray.400" }}
                 p={4}
               />
               <FormErrorMessage>{errors.question?.message}</FormErrorMessage>
             </FormControl>
 
-            <FormControl isInvalid={!!errors.option_a}>
-              <FormLabel fontWeight="bold">Option A</FormLabel>
-              <Input
-                defaultValue={question?.option_a}
-                type="text"
-                placeholder="e.g., Joe Biden"
-                {...register("option_a", { required: "Option A is required" })}
-                bg="gray.50"
-                borderRadius="md"
-                border="2px solid"
-                borderColor="gray.300"
-                _hover={{
-                  borderColor: "blue.400",
-                }}
-                _focus={{
-                  outline: "none",
-                  borderColor: "blue.500",
-                  boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.5)",
-                }}
-                _placeholder={{
-                  color: "gray.400",
-                }}
-                p={4}
-              />
-              <FormErrorMessage>{errors.option_a?.message}</FormErrorMessage>
-            </FormControl>
-
-            <FormControl isInvalid={!!errors.option_b}>
-              <FormLabel fontWeight="bold">Option B</FormLabel>
-              <Input
-                defaultValue={question?.option_b}
-                type="text"
-                placeholder="e.g., Donald Trump"
-                {...register("option_b", { required: "Option B is required" })}
-                bg="gray.50"
-                borderRadius="md"
-                border="2px solid"
-                borderColor="gray.300"
-                _hover={{
-                  borderColor: "blue.400",
-                }}
-                _focus={{
-                  outline: "none",
-                  borderColor: "blue.500",
-                  boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.5)",
-                }}
-                _placeholder={{
-                  color: "gray.400",
-                }}
-                p={4}
-              />
-              <FormErrorMessage>{errors.option_b?.message}</FormErrorMessage>
-            </FormControl>
-
-            <FormControl isInvalid={!!errors.option_c}>
-              <FormLabel fontWeight="bold">Option C</FormLabel>
-              <Input
-                defaultValue={question?.option_c}
-                type="text"
-                placeholder="e.g., Barack Obama"
-                {...register("option_c", { required: "Option C is required" })}
-                bg="gray.50"
-                borderRadius="md"
-                border="2px solid"
-                borderColor="gray.300"
-                _hover={{
-                  borderColor: "blue.400",
-                }}
-                _focus={{
-                  outline: "none",
-                  borderColor: "blue.500",
-                  boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.5)",
-                }}
-                _placeholder={{
-                  color: "gray.400",
-                }}
-                p={4}
-              />
-              <FormErrorMessage>{errors.option_c?.message}</FormErrorMessage>
-            </FormControl>
-
-            <FormControl isInvalid={!!errors.option_d}>
-              <FormLabel fontWeight="bold">Option D</FormLabel>
-              <Input
-                defaultValue={question?.option_d}
-                type="text"
-                placeholder="e.g., Kamala Harris"
-                {...register("option_d", { required: "Option D is required" })}
-                bg="gray.50"
-                borderRadius="md"
-                border="2px solid"
-                borderColor="gray.300"
-                _hover={{
-                  borderColor: "blue.400",
-                }}
-                _focus={{
-                  outline: "none",
-                  borderColor: "blue.500",
-                  boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.5)",
-                }}
-                _placeholder={{
-                  color: "gray.400",
-                }}
-                p={4}
-              />
-              <FormErrorMessage>{errors.option_d?.message}</FormErrorMessage>
-            </FormControl>
+            {(["option_a", "option_b", "option_c", "option_d"] as const).map(
+              (optionKey, index) => (
+                <FormControl key={optionKey} isInvalid={!!errors[optionKey]}>
+                  <FormLabel fontWeight="bold" color="gray.700">
+                    Option {String.fromCharCode(65 + index)}
+                  </FormLabel>
+                  <Input
+                    defaultValue={question ? question[optionKey] : ""}
+                    type="text"
+                    placeholder={`e.g., ${
+                      index === 0
+                        ? "Joe Biden"
+                        : index === 1
+                        ? "Donald Trump"
+                        : index === 2
+                        ? "Barack Obama"
+                        : "Kamala Harris"
+                    }`}
+                    {...register(optionKey, {
+                      required: `Option ${String.fromCharCode(
+                        65 + index
+                      )} is required`,
+                    })}
+                    bg="gray.50"
+                    borderRadius="md"
+                    border="2px solid"
+                    borderColor="gray.300"
+                    _hover={{ borderColor: "#C9A834" }}
+                    _focus={{
+                      outline: "none",
+                      borderColor: "#C9A834",
+                      boxShadow: "0 0 0 3px rgba(201, 168, 52, 0.5)",
+                    }}
+                    _placeholder={{ color: "gray.400" }}
+                    p={4}
+                  />
+                  <FormErrorMessage>
+                    {errors[optionKey]?.message}
+                  </FormErrorMessage>
+                </FormControl>
+              )
+            )}
 
             <FormControl isInvalid={!!errors.correct_option}>
-              <FormLabel fontWeight="bold">Correct Option</FormLabel>
+              <FormLabel fontWeight="bold" color="gray.700">
+                Correct Option
+              </FormLabel>
               <Input
                 defaultValue={question?.correct_option}
                 type="text"
@@ -229,17 +161,13 @@ const EditQuestion = () => {
                 borderRadius="md"
                 border="2px solid"
                 borderColor="gray.300"
-                _hover={{
-                  borderColor: "blue.400",
-                }}
+                _hover={{ borderColor: "#C9A834" }}
                 _focus={{
                   outline: "none",
-                  borderColor: "blue.500",
-                  boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.5)",
+                  borderColor: "#C9A834",
+                  boxShadow: "0 0 0 3px rgba(201, 168, 52, 0.5)",
                 }}
-                _placeholder={{
-                  color: "gray.400",
-                }}
+                _placeholder={{ color: "gray.400" }}
                 p={4}
               />
               <FormErrorMessage>
@@ -248,12 +176,10 @@ const EditQuestion = () => {
             </FormControl>
 
             <Button
-              colorScheme="blue"
+              bg="#C9A834"
               size="lg"
               type="submit"
-              _hover={{
-                bg: "blue.600", // Slightly darker blue on hover
-              }}
+              _hover={{ bg: "#dcbf3e" }}
               width="full"
             >
               Update Question

@@ -6,15 +6,7 @@ function LayOut() {
   return (
     <Box>
       <Nevbar />
-      <Box
-        width="1200px"
-        mx="auto"
-        p={8}
-        borderRadius="lg"
-        boxShadow={"md"}
-        bg={"white"}
-        mt={12}
-      >
+      <Box width="auto" mx="auto" p={8} mt={12}>
         <Outlet />
       </Box>
     </Box>

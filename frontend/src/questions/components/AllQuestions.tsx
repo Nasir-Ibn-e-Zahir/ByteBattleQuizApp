@@ -12,79 +12,83 @@ export const AllQuestions = () => {
   const { mutate: deleteQuestion } = useDeleteQuestion();
 
   const filteredQuestions = SelectedType
-    ? questions?.filter((q) => q.q_type == SelectedType)
+    ? questions?.filter((q) => q.q_type === SelectedType)
     : questions;
 
   const typeOptions = [
-    { value: "", lable: "All Types" },
+    { value: "", label: "All Types" },
     ...(q_types?.map((t) => ({
       value: t.question_type,
-      lable: t.question_type,
+      label: t.question_type,
     })) || []),
   ];
 
   const handleDeleteQuestion = (id: number) => {
     deleteQuestion(id, {
       onSuccess: () => {
-        toast({
-          title: "Question deleted.",
-          description: `Question with ID ${id} has been deleted successfully.`,
-          status: "success",
-          duration: 5000,
-          isClosable: true,
-        });
+        // Replace with your toast implementation
+        console.log(`Question with ID ${id} has been deleted successfully.`);
       },
-      onError: (error) => {
-        toast({
-          title: "Error deleting question.",
-          description: `Failed to delete question with ID ${id}. ${error.message}`,
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
+      onError: (error: any) => {
+        // Replace with your toast implementation
+        console.error(
+          `Failed to delete question with ID ${id}. ${error.message}`
+        );
       },
     });
   };
 
   if (isLoading) {
     return (
-      <Box textAlign={"center"}>
-        <Spinner size={"xl"} />
+      <Box textAlign="center" mt={5}>
+        <Spinner size="xl" />
       </Box>
     );
   }
 
   if (error) {
     return (
-      <Box textAlign={"center"}>
-        <Text color={"red.500"}>
-          Faild to Load questions. Please try again later.
+      <Box textAlign="center" mt={5}>
+        <Text color="red.500">
+          Failed to load questions. Please try again later.
         </Text>
       </Box>
     );
   }
 
   return (
-    <Box>
-      <HStack>
+    <Box
+      maxW="container.lg"
+      mx="auto"
+      p={6}
+      bg="white"
+      borderRadius="xl"
+      boxShadow="md"
+    >
+      <HStack mb={4} gap={4}>
         <select
           value={SelectedType}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-            setSelectedType(e.target.value)
-          }
+          onChange={(e) => setSelectedType(e.target.value)}
+
+          // _hover={{ borderColor: "#C9A834" }}
+          // _focus={{
+          //   outline: "none",
+          //   borderColor: "#C9A834",
+          //   boxShadow: "0 0 0 3px rgba(201, 168, 52, 0.5)",
+          // }}
         >
           {typeOptions.map((option) => (
             <option key={option.value} value={option.value}>
-              {option.lable}
+              {option.label}
             </option>
           ))}
         </select>
-        <Button>
+        <Button bg="#C9A834" color="black" _hover={{ bg: "#dcbf3e" }}>
           <Link to={"/question/add_question"}>Add New Question</Link>
         </Button>
       </HStack>
-      <Box>
-        <Table.Root>
+      <Box overflowX="auto">
+        <Table.Root variant="line">
           <Table.Header>
             <Table.Row>
               <Table.ColumnHeader>ID</Table.ColumnHeader>
@@ -99,7 +103,7 @@ export const AllQuestions = () => {
           </Table.Header>
           <Table.Body>
             {filteredQuestions?.map((question) => (
-              <Table.Row key={question.id}>
+              <Table.Row key={question.id} _hover={{ bg: "gray.50" }}>
                 <Table.Cell>{question.id}</Table.Cell>
                 <Table.Cell>{question.q_type}</Table.Cell>
                 <Table.Cell>{question.question}</Table.Cell>
@@ -108,14 +112,25 @@ export const AllQuestions = () => {
                 <Table.Cell>{question.option_c}</Table.Cell>
                 <Table.Cell>{question.option_d}</Table.Cell>
                 <Table.Cell>{question.correct_option}</Table.Cell>
-
                 <Table.Cell>
-                  <Button onClick={() => handleDeleteQuestion(question.id)}>
-                    delete
+                  <Button
+                    mr={2}
+                    size="sm"
+                    bg="#C9A834"
+                    color="black"
+                    _hover={{ bg: "#dcbf3e" }}
+                    onClick={() => handleDeleteQuestion(question.id)}
+                  >
+                    Delete
                   </Button>
                 </Table.Cell>
                 <Table.Cell>
-                  <Button background={"blue.600"}>
+                  <Button
+                    size="sm"
+                    bg="blue.600"
+                    color="white"
+                    _hover={{ bg: "blue.500" }}
+                  >
                     <Link to={`/question/${question.id}/edit`}>Edit</Link>
                   </Button>
                 </Table.Cell>
@@ -129,13 +144,3 @@ export const AllQuestions = () => {
 };
 
 export default AllQuestions;
-
-function toast(arg0: {
-  title: string;
-  description: string;
-  status: string;
-  duration: number;
-  isClosable: boolean;
-}) {
-  throw new Error("Function not implemented.");
-}

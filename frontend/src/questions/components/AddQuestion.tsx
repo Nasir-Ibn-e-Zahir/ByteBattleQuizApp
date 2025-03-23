@@ -21,17 +21,17 @@ const AddQuestion = () => {
 
   return (
     <Box maxW="2xl" mx="auto" bg="white" p={8} borderRadius="xl" boxShadow="lg">
-      <Heading size="xl" mb={6} textAlign="center" color="gray">
+      <Heading size="xl" mb={6} textAlign="center" color="gray.800">
         Add New Question
       </Heading>
-      <Text textAlign="center" color="gray.600" ml={10} mr={5} mb={6}>
-        Please fill the following fields to create a new question in the Quiz.
+      <Text textAlign="center" color="gray.600" mb={6}>
+        Please fill in the fields below to create a new question.
       </Text>
       <Box p={6}>
         <form onSubmit={handleSubmit(submit)}>
-          <Stack>
-            <FormControl mb={6} isInvalid={!!errors.q_type}>
-              <FormLabel fontSize="sm" fontWeight="600" color="gray.600">
+          <Stack gap={4}>
+            <FormControl isInvalid={!!errors.q_type}>
+              <FormLabel fontSize="sm" fontWeight="600" color="gray.700">
                 Question Type
               </FormLabel>
               <Input
@@ -41,20 +41,12 @@ const AddQuestion = () => {
                 {...register("q_type", {
                   required: "Question type is required",
                 })}
-                bg="gray.50"
-                borderRadius="md"
-                border="2px solid"
-                borderColor="gray.300"
-                _hover={{
-                  borderColor: "blue.400",
-                }}
+                borderColor="#C9A834"
+                _hover={{ borderColor: "#dcbf3e" }}
                 _focus={{
                   outline: "none",
-                  borderColor: "blue.500",
-                  boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.5)",
-                }}
-                _placeholder={{
-                  color: "gray.400",
+                  borderColor: "#C9A834",
+                  boxShadow: "0 0 0 3px rgba(201,168,52,0.5)",
                 }}
                 p={4}
               />
@@ -62,8 +54,9 @@ const AddQuestion = () => {
                 {errors.q_type?.message}
               </FormErrorMessage>
             </FormControl>
-            <FormControl mb={6} isInvalid={!!errors.question}>
-              <FormLabel fontSize="sm" fontWeight="600" color="gray.600">
+
+            <FormControl isInvalid={!!errors.question}>
+              <FormLabel fontSize="sm" fontWeight="600" color="gray.700">
                 Question
               </FormLabel>
               <Input
@@ -73,20 +66,12 @@ const AddQuestion = () => {
                 {...register("question", {
                   required: "This field is required",
                 })}
-                bg="gray.50"
-                borderRadius="md"
-                border="2px solid"
-                borderColor="gray.300"
-                _hover={{
-                  borderColor: "blue.400",
-                }}
+                borderColor="#C9A834"
+                _hover={{ borderColor: "#dcbf3e" }}
                 _focus={{
                   outline: "none",
-                  borderColor: "blue.500",
-                  boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.5)",
-                }}
-                _placeholder={{
-                  color: "gray.400",
+                  borderColor: "#C9A834",
+                  boxShadow: "0 0 0 3px rgba(201,168,52,0.5)",
                 }}
                 p={4}
               />
@@ -95,132 +80,47 @@ const AddQuestion = () => {
               </FormErrorMessage>
             </FormControl>
 
-            <FormControl mb={6} isInvalid={!!errors.option_a}>
-              <FormLabel fontSize="sm" fontWeight="600" color="gray.600">
-                Option A
-              </FormLabel>
-              <Input
-                size="lg"
-                type="text"
-                placeholder="e.g., Joe Biden"
-                {...register("option_a", { required: "Option A is required" })}
-                bg="gray.50"
-                borderRadius="md"
-                border="2px solid"
-                borderColor="gray.300"
-                _hover={{
-                  borderColor: "blue.400",
-                }}
-                _focus={{
-                  outline: "none",
-                  borderColor: "blue.500",
-                  boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.5)",
-                }}
-                _placeholder={{
-                  color: "gray.400",
-                }}
-                p={4}
-              />
-              <FormErrorMessage color="red">
-                {errors.option_a?.message}
-              </FormErrorMessage>
-            </FormControl>
+            {(["option_a", "option_b", "option_c", "option_d"] as const).map(
+              (optionKey, index) => (
+                <FormControl key={optionKey} isInvalid={!!errors[optionKey]}>
+                  <FormLabel fontSize="sm" fontWeight="600" color="gray.700">
+                    Option {String.fromCharCode(65 + index)}
+                  </FormLabel>
+                  <Input
+                    size="lg"
+                    type="text"
+                    placeholder={`e.g., ${
+                      index === 0
+                        ? "Joe Biden"
+                        : index === 1
+                        ? "Donald Trump"
+                        : index === 2
+                        ? "Barack Obama"
+                        : "Kamala Harris"
+                    }`}
+                    {...register(optionKey, {
+                      required: `Option ${String.fromCharCode(
+                        65 + index
+                      )} is required`,
+                    })}
+                    borderColor="#C9A834"
+                    _hover={{ borderColor: "#dcbf3e" }}
+                    _focus={{
+                      outline: "none",
+                      borderColor: "#C9A834",
+                      boxShadow: "0 0 0 3px rgba(201,168,52,0.5)",
+                    }}
+                    p={4}
+                  />
+                  <FormErrorMessage color="red">
+                    {errors[optionKey]?.message}
+                  </FormErrorMessage>
+                </FormControl>
+              )
+            )}
 
-            <FormControl mb={6} isInvalid={!!errors.option_b}>
-              <FormLabel fontSize="sm" fontWeight="600" color="gray.600">
-                Option B
-              </FormLabel>
-              <Input
-                size="lg"
-                type="text"
-                placeholder="e.g., Donald Trump"
-                {...register("option_b", { required: "Option B is required" })}
-                bg="gray.50"
-                borderRadius="md"
-                border="2px solid"
-                borderColor="gray.300"
-                _hover={{
-                  borderColor: "blue.400",
-                }}
-                _focus={{
-                  outline: "none",
-                  borderColor: "blue.500",
-                  boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.5)",
-                }}
-                _placeholder={{
-                  color: "gray.400",
-                }}
-                p={4}
-              />
-              <FormErrorMessage color="red">
-                {errors.option_b?.message}
-              </FormErrorMessage>
-            </FormControl>
-
-            <FormControl mb={6} isInvalid={!!errors.option_c}>
-              <FormLabel fontSize="sm" fontWeight="600" color="gray.600">
-                Option C
-              </FormLabel>
-              <Input
-                size="lg"
-                type="text"
-                placeholder="e.g., Barack Obama"
-                {...register("option_c", { required: "Option C is required" })}
-                bg="gray.50"
-                borderRadius="md"
-                border="2px solid"
-                borderColor="gray.300"
-                _hover={{
-                  borderColor: "blue.400",
-                }}
-                _focus={{
-                  outline: "none",
-                  borderColor: "blue.500",
-                  boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.5)",
-                }}
-                _placeholder={{
-                  color: "gray.400",
-                }}
-                p={4}
-              />
-              <FormErrorMessage color="red">
-                {errors.option_c?.message}
-              </FormErrorMessage>
-            </FormControl>
-
-            <FormControl mb={6} isInvalid={!!errors.option_d}>
-              <FormLabel fontSize="sm" fontWeight="600" color="gray.600">
-                Option D
-              </FormLabel>
-              <Input
-                size="lg"
-                type="text"
-                placeholder="e.g., Kamala Harris"
-                {...register("option_d", { required: "Option D is required" })}
-                bg="gray.50"
-                borderRadius="md"
-                border="2px solid"
-                borderColor="gray.300"
-                _hover={{
-                  borderColor: "blue.400",
-                }}
-                _focus={{
-                  outline: "none",
-                  borderColor: "blue.500",
-                  boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.5)",
-                }}
-                _placeholder={{
-                  color: "gray.400",
-                }}
-                p={4}
-              />
-              <FormErrorMessage color="red">
-                {errors.option_d?.message}
-              </FormErrorMessage>
-            </FormControl>
-
-            <FormControl mb={6} isInvalid={!!errors.correct_option}>
-              <FormLabel fontSize="sm" fontWeight="600" color="gray.600">
+            <FormControl isInvalid={!!errors.correct_option}>
+              <FormLabel fontSize="sm" fontWeight="600" color="gray.700">
                 Correct Option
               </FormLabel>
               <Input
@@ -230,20 +130,12 @@ const AddQuestion = () => {
                 {...register("correct_option", {
                   required: "Correct option is required",
                 })}
-                bg="gray.50"
-                borderRadius="md"
-                border="2px solid"
-                borderColor="gray.300"
-                _hover={{
-                  borderColor: "blue.400",
-                }}
+                borderColor="#C9A834"
+                _hover={{ borderColor: "#dcbf3e" }}
                 _focus={{
                   outline: "none",
-                  borderColor: "blue.500",
-                  boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.5)",
-                }}
-                _placeholder={{
-                  color: "gray.400",
+                  borderColor: "#C9A834",
+                  boxShadow: "0 0 0 3px rgba(201,168,52,0.5)",
                 }}
                 p={4}
               />
@@ -253,12 +145,11 @@ const AddQuestion = () => {
             </FormControl>
 
             <Button
-              colorScheme="blue"
+              bg="#C9A834"
+              color="black"
               size="lg"
               type="submit"
-              _hover={{
-                bg: "blue.600",
-              }}
+              _hover={{ bg: "#dcbf3e" }}
               width="full"
             >
               Add Question

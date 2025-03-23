@@ -22,7 +22,7 @@ function Nevbar() {
               as="span"
               fontSize="lg"
               fontWeight="500"
-              _hover={{ color: "brand.primary" }}
+              _hover={{ color: "#C9A834" }}
             >
               Teams
             </Box>
@@ -32,7 +32,7 @@ function Nevbar() {
               as="span"
               fontSize="lg"
               fontWeight="500"
-              _hover={{ color: "brand.primary" }}
+              _hover={{ color: "#C9A834" }}
             >
               Matches
             </Box>
@@ -42,7 +42,7 @@ function Nevbar() {
               as="span"
               fontSize="lg"
               fontWeight="500"
-              _hover={{ color: "brand.primary" }}
+              _hover={{ color: "#C9A834" }}
             >
               Questions
             </Box>
@@ -52,7 +52,7 @@ function Nevbar() {
               as="span"
               fontSize="lg"
               fontWeight="500"
-              _hover={{ color: "brand.primary" }}
+              _hover={{ color: "#C9A834" }}
             >
               Logout
             </Box>

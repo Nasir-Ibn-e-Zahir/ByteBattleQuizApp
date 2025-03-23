@@ -23,41 +23,92 @@ function RegisterUser() {
 
   const submit = (data: UserRegistrationData) => {
     mutation.mutate(data);
-    console.log("Data is send to the backend.");
+    console.log("Data is sent to the backend.");
   };
 
   return (
-    <Box>
-      <Heading paddingY="30px" textAlign="center">
+    <Box
+      maxW="sm"
+      mx="auto"
+      bg="white"
+      p={8}
+      mt={8}
+      borderRadius="xl"
+      boxShadow="lg"
+    >
+      <Heading py="30px" textAlign="center" color="gray.800">
         Sign Up
       </Heading>
       <form onSubmit={handleSubmit(submit)}>
-        <FormControl isInvalid={!!errors.username} paddingY="15px">
+        <FormControl isInvalid={!!errors.username} py="15px">
           <FormLabel>Username</FormLabel>
-          <Input {...register("username")} type="text" required />
+          <Input
+            {...register("username")}
+            type="text"
+            required
+            bg="gray.50"
+            borderColor="#C9A834"
+            _hover={{ borderColor: "#dcbf3e" }}
+            _focus={{
+              outline: "none",
+              borderColor: "#C9A834",
+              boxShadow: "0 0 0 3px rgba(201,168,52,0.5)",
+            }}
+          />
           <FormErrorMessage>
             {errors.username?.message as string}
           </FormErrorMessage>
         </FormControl>
-        <FormControl isInvalid={!!errors.email} paddingY="15px">
+        <FormControl isInvalid={!!errors.email} py="15px">
           <FormLabel>Email</FormLabel>
-          <Input {...register("email")} type="email" required />
+          <Input
+            {...register("email")}
+            type="email"
+            required
+            bg="gray.50"
+            borderColor="#C9A834"
+            _hover={{ borderColor: "#dcbf3e" }}
+            _focus={{
+              outline: "none",
+              borderColor: "#C9A834",
+              boxShadow: "0 0 0 3px rgba(201,168,52,0.5)",
+            }}
+          />
           <FormErrorMessage>{errors.email?.message as string}</FormErrorMessage>
         </FormControl>
-        <FormControl isInvalid={!!errors.password} paddingY="15px">
+        <FormControl isInvalid={!!errors.password} py="15px">
           <FormLabel>Password</FormLabel>
-          <Input {...register("password")} type="password" required />
+          <Input
+            {...register("password")}
+            type="password"
+            required
+            bg="gray.50"
+            borderColor="#C9A834"
+            _hover={{ borderColor: "#dcbf3e" }}
+            _focus={{
+              outline: "none",
+              borderColor: "#C9A834",
+              boxShadow: "0 0 0 3px rgba(201,168,52,0.5)",
+            }}
+          />
           <FormErrorMessage>
             {errors.password?.message as string}
           </FormErrorMessage>
         </FormControl>
-        <Button type="submit" paddingY="15px">
+        <Button
+          type="submit"
+          py="15px"
+          bg="#C9A834"
+          color="black"
+          _hover={{ bg: "#dcbf3e" }}
+          width="full"
+        >
           Signup
         </Button>
       </form>
-      <Text paddingY="15px">
+      <Text py="15px" textAlign="center">
         Already have an account?{" "}
-        <Link to={"/login"} style={{ fontWeight: "bold" }}>
+        <Link to="/login" style={{ fontWeight: "bold" }}>
           login here
         </Link>
       </Text>
