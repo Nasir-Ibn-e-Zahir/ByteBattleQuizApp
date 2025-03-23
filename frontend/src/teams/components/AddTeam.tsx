@@ -92,7 +92,7 @@ const AddTeam = () => {
 
             <Button
               bg="#C9A834"
-              color="black"
+              color="white"
               size="lg"
               type="submit"
               _hover={{ bg: "#dcbf3e" }}

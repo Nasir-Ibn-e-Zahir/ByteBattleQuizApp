@@ -211,7 +211,7 @@ export const AddMatch = () => {
             size="md"
             width="150px"
             bg="#C9A834"
-            color="black"
+            color="white"
             _hover={{ bg: "#dcbf3e" }}
           >
             Submit

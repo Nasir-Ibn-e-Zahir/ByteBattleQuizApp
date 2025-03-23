@@ -34,7 +34,7 @@ function AllMatches() {
       borderRadius="xl"
       boxShadow="md"
     >
-      <Button mb={4} bg="#C9A834" color="black" _hover={{ bg: "#dcbf3e" }}>
+      <Button mb={4} bg="#C9A834" color="white" _hover={{ bg: "#dcbf3e" }}>
         <Link to={"/match/add_match"}>Create New Match</Link>
       </Button>
       <Box overflowX="auto">
@@ -68,7 +68,7 @@ function AllMatches() {
                     size="sm"
                     mr={2}
                     bg="#C9A834"
-                    color="black"
+                    color="white"
                     _hover={{ bg: "#dcbf3e" }}
                   >
                     <Link to={`/match/${match.id}/scoreboard`}>Scoreboard</Link>

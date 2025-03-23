@@ -87,17 +87,13 @@ const EditQuestion = () => {
                 {...register("question", {
                   required: "This field is required",
                 })}
-                bg="gray.50"
-                borderRadius="md"
-                border="2px solid"
-                borderColor="gray.300"
-                _hover={{ borderColor: "#C9A834" }}
+                borderColor="#C9A834"
+                _hover={{ borderColor: "#dcbf3e" }}
                 _focus={{
                   outline: "none",
                   borderColor: "#C9A834",
-                  boxShadow: "0 0 0 3px rgba(201, 168, 52, 0.5)",
+                  boxShadow: "0 0 0 3px rgba(201,168,52,0.5)",
                 }}
-                _placeholder={{ color: "gray.400" }}
                 p={4}
               />
               <FormErrorMessage>{errors.question?.message}</FormErrorMessage>
@@ -126,17 +122,13 @@ const EditQuestion = () => {
                         65 + index
                       )} is required`,
                     })}
-                    bg="gray.50"
-                    borderRadius="md"
-                    border="2px solid"
-                    borderColor="gray.300"
-                    _hover={{ borderColor: "#C9A834" }}
+                    borderColor="#C9A834"
+                    _hover={{ borderColor: "#dcbf3e" }}
                     _focus={{
                       outline: "none",
                       borderColor: "#C9A834",
-                      boxShadow: "0 0 0 3px rgba(201, 168, 52, 0.5)",
+                      boxShadow: "0 0 0 3px rgba(201,168,52,0.5)",
                     }}
-                    _placeholder={{ color: "gray.400" }}
                     p={4}
                   />
                   <FormErrorMessage>
@@ -157,17 +149,13 @@ const EditQuestion = () => {
                 {...register("correct_option", {
                   required: "Correct option is required",
                 })}
-                bg="gray.50"
-                borderRadius="md"
-                border="2px solid"
-                borderColor="gray.300"
-                _hover={{ borderColor: "#C9A834" }}
+                borderColor="#C9A834"
+                _hover={{ borderColor: "#dcbf3e" }}
                 _focus={{
                   outline: "none",
                   borderColor: "#C9A834",
-                  boxShadow: "0 0 0 3px rgba(201, 168, 52, 0.5)",
+                  boxShadow: "0 0 0 3px rgba(201,168,52,0.5)",
                 }}
-                _placeholder={{ color: "gray.400" }}
                 p={4}
               />
               <FormErrorMessage>

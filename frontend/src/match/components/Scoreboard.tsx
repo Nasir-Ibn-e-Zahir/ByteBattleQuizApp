@@ -111,7 +111,7 @@ function Scoreboard() {
         type="submit"
         onClick={handleSubmit}
         bg="#C9A834"
-        color="black"
+        color="white"
         _hover={{ bg: "#dcbf3e" }}
       >
         Update Score

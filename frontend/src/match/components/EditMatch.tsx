@@ -201,7 +201,7 @@ export const EditMatch = () => {
             type="submit"
             size="md"
             bg="#C9A834"
-            color="black"
+            color="white"
             _hover={{ bg: "#dcbf3e" }}
           >
             Submit

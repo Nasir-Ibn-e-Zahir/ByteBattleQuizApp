@@ -88,7 +88,13 @@ const EditTeam = () => {
                 {...register("team_name", {
                   required: "Team name is required",
                 })}
-                _focus={{ borderColor: "#C9A834" }}
+                borderColor="#C9A834"
+                _hover={{ borderColor: "#dcbf3e" }}
+                _focus={{
+                  outline: "none",
+                  borderColor: "#C9A834",
+                  boxShadow: "0 0 0 3px rgba(201,168,52,0.5)",
+                }}
               />
               <FormErrorMessage>{errors.team_name?.message}</FormErrorMessage>
             </FormControl>
@@ -103,15 +109,20 @@ const EditTeam = () => {
                 {...register("description", {
                   required: "Description is required",
                 })}
-                _focus={{ borderColor: "#C9A834" }}
-                resize="vertical"
+                borderColor="#C9A834"
+                _hover={{ borderColor: "#dcbf3e" }}
+                _focus={{
+                  outline: "none",
+                  borderColor: "#C9A834",
+                  boxShadow: "0 0 0 3px rgba(201,168,52,0.5)",
+                }}
               />
               <FormErrorMessage>{errors.description?.message}</FormErrorMessage>
             </FormControl>
 
             <Button
               bg="#C9A834"
-              color="black"
+              color="white"
               size="lg"
               type="submit"
               _hover={{ bg: "#dcbf3e" }}

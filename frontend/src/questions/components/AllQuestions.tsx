@@ -69,13 +69,6 @@ export const AllQuestions = () => {
         <select
           value={SelectedType}
           onChange={(e) => setSelectedType(e.target.value)}
-
-          // _hover={{ borderColor: "#C9A834" }}
-          // _focus={{
-          //   outline: "none",
-          //   borderColor: "#C9A834",
-          //   boxShadow: "0 0 0 3px rgba(201, 168, 52, 0.5)",
-          // }}
         >
           {typeOptions.map((option) => (
             <option key={option.value} value={option.value}>
@@ -83,7 +76,7 @@ export const AllQuestions = () => {
             </option>
           ))}
         </select>
-        <Button bg="#C9A834" color="black" _hover={{ bg: "#dcbf3e" }}>
+        <Button bg="#C9A834" color="white" _hover={{ bg: "#dcbf3e" }}>
           <Link to={"/question/add_question"}>Add New Question</Link>
         </Button>
       </HStack>
@@ -116,9 +109,9 @@ export const AllQuestions = () => {
                   <Button
                     mr={2}
                     size="sm"
-                    bg="#C9A834"
-                    color="black"
-                    _hover={{ bg: "#dcbf3e" }}
+                    bg="red"
+                    color="white"
+                    _hover={{ bg: "red.500" }}
                     onClick={() => handleDeleteQuestion(question.id)}
                   >
                     Delete

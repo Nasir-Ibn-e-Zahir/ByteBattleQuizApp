@@ -47,7 +47,7 @@ function AllTeams() {
       borderRadius="xl"
       boxShadow="md"
     >
-      <Button mb={4} bg="#C9A834" color="black" _hover={{ bg: "#dcbf3e" }}>
+      <Button mb={4} bg="#C9A834" color="white" _hover={{ bg: "#dcbf3e" }}>
         <Link to={"/team/add_team"}>Add New Team</Link>
       </Button>
 
@@ -70,22 +70,22 @@ function AllTeams() {
                   <Table.Cell>{team.description}</Table.Cell>
                   <Table.Cell>
                     <Button
-                      mr={2}
-                      size="sm"
-                      bg="#C9A834"
-                      color="black"
-                      _hover={{ bg: "#dcbf3e" }}
-                      onClick={() => handleDeleteTeam(team.id)}
-                    >
-                      Delete
-                    </Button>
-                    <Button
                       size="sm"
                       bg="blue.600"
                       color="white"
                       _hover={{ bg: "blue.500" }}
                     >
                       <Link to={`/team/${team.id}/edit`}>Edit</Link>
+                    </Button>
+                    <Button
+                      ml={2}
+                      size="sm"
+                      bg="red"
+                      color="white"
+                      _hover={{ bg: "red.500" }}
+                      onClick={() => handleDeleteTeam(team.id)}
+                    >
+                      Delete
                     </Button>
                   </Table.Cell>
                 </Table.Row>
