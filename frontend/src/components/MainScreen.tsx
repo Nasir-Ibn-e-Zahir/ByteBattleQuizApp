@@ -162,7 +162,7 @@ function MainScreen() {
             alt="ByteBattle24 Logo"
             mx="auto"
             mb={4}
-            height="300px"
+            height="200px"
           />
         </Box>
 
@@ -204,12 +204,27 @@ function MainScreen() {
                       bg={background}
                       color="white"
                       size="lg"
-                      height="100px"
+                      height="80px"
                       borderRadius="md"
                       _hover={{ bg: "#dcbf3e" }}
                       fontWeight="bold"
                     >
-                      {String.fromCharCode(65 + index)}) {optionValue}
+                      <VStack gap={0} mt={2}>
+                        <Box
+                          as="span"
+                          fontWeight="bold"
+                          color="blue.600"
+                          width="40px"
+                          height="40px"
+                          bg="white"
+                          borderRadius="5px"
+                          pt={2}
+                          fontSize="xl"
+                        >
+                          {String.fromCharCode(65 + index)}
+                        </Box>
+                        {optionValue}
+                      </VStack>
                     </Button>
                   );
                 }

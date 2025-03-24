@@ -1,5 +1,5 @@
 const db = require('../models');
-const { Op } = require('sequelize');
+const { Op, where } = require('sequelize');
 
 exports.createBuzzerPress = async (req, res) => {
     try {
@@ -27,3 +27,16 @@ exports.getBuzzerQueue = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
+exports.deleteAllBuzzers = async (req, res) => {
+    try {
+        db.BuzzerPress.destroy({
+            where: {},
+            turncate: true,
+
+        })
+        res.status(200).json({ message: "Buzzers reset" })
+    } catch (error) {
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}

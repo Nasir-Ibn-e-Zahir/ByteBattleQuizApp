@@ -11,11 +11,24 @@ import useSingleMatch from "../hooks/useSingleMatch";
 import { useParams } from "react-router-dom";
 import { FormControl } from "@chakra-ui/form-control";
 import { useEffect, useState } from "react";
+import useResetBuzzers from "../../buzzer/hooks/useResetBuzzers";
 
 function Scoreboard() {
   const { id } = useParams<{ id: string }>();
   const { data: match, isError, isLoading, mutation } = useSingleMatch(id);
   const [scores, setScores] = useState<{ [key: number]: number }>({});
+  const resetBuzzers = useResetBuzzers();
+
+  const handleResetBuzzers = () => {
+    resetBuzzers.mutate(undefined, {
+      onSuccess: () => {
+        console.log("Buzzers reset successfully");
+      },
+      onError: (error: any) => {
+        console.error("Failed to reset buzzers:", error.message);
+      },
+    });
+  };
 
   // Initialize scores with current match rounds
   useEffect(() => {
@@ -60,6 +73,7 @@ function Scoreboard() {
       score: scores[round.id],
     }));
     mutation.mutate(updatedRounds);
+    handleResetBuzzers();
   };
 
   return (
@@ -116,6 +130,16 @@ function Scoreboard() {
       >
         Update Score
       </Button>
+      {/* <Button
+        mt={6}
+        ml={6}
+        onClick={handleResetBuzzers}
+        bg="red"
+        color="white"
+        _hover={{ bg: "red.500" }}
+      >
+        reset buzzers
+      </Button> */}
     </Box>
   );
 }
