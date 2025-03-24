@@ -11,7 +11,7 @@ import {
   Image,
 } from "@chakra-ui/react";
 import useAllQuestoins, { Question } from "../questions/hooks/uesAllQustions";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useAllBuzzers from "../buzzer/hooks/useAllBuzzers";
 import byteBattleLogo from "../assets/logo.jpg";
 
@@ -26,6 +26,14 @@ function MainScreen() {
   const [showAnswer, setShowAnswer] = useState(false);
   const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
   const [activeOption, setActiveOption] = useState<string | null>(null);
+  const [backgroundColor, setBackgroundColor] = useState("white");
+  let timeoutId: NodeJS.Timeout | null = null;
+
+  useEffect(() => {
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId); // Cleanup timeout on unmount
+    };
+  }, []);
 
   // Filter questions by match type (if applicable)
   const filteredQuestions = match?.match_type
@@ -58,7 +66,7 @@ function MainScreen() {
     return availableQuestions[randomIndex];
   };
 
-  // Play sound using HTML5 Audio
+  // Play sound using HTML5 Audio (if needed)
   const playSound = (soundFile: string) => {
     const audio = new Audio(soundFile);
     audio.play();
@@ -101,7 +109,7 @@ function MainScreen() {
 
   // Button Handlers
   const handleNextQuestion = () => {
-    document.body.style.backgroundColor = "white";
+    setBackgroundColor("white");
     setShowAnswer(false);
     setShowCorrectAnswer(false);
     setActiveOption(null);
@@ -121,21 +129,18 @@ function MainScreen() {
   };
 
   const handleCheckButton = () => {
-    // Only proceed if an option has been selected
     if (activeOption === null) return;
-    document.body.style.transition = "background-color 0.3s";
     if (correctOption === "correct") {
-      document.body.style.backgroundColor = "green";
-      playSound("correct.mp3");
+      setShowCorrectAnswer(true);
       displayCelebration();
+      setBackgroundColor("white");
     } else {
-      document.body.style.backgroundColor = "red";
-      playSound("wrong.mp3");
       setShowAnswer(true);
+      setBackgroundColor("red");
+      timeoutId = setTimeout(() => {
+        setBackgroundColor("white");
+      }, 4000);
     }
-    setTimeout(() => {
-      document.body.style.backgroundColor = "white";
-    }, 2000);
   };
 
   return (
@@ -156,7 +161,7 @@ function MainScreen() {
       <Flex
         minH="100vh"
         p={4}
-        bg="white"
+        bg={backgroundColor} // Use Chakra UI's bg prop
         justifyContent="space-between"
         flexWrap={{ base: "wrap", md: "nowrap" }}
       >
@@ -250,6 +255,7 @@ function MainScreen() {
                     const isCorrect =
                       optionValue === currentQuestion?.correct_option;
 
+                    // When correct answer is revealed, the selected button turns green
                     let background = "gold";
                     if (showCorrectAnswer && isCorrect) {
                       background = "green";
