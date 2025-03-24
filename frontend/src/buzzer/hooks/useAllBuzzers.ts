@@ -1,4 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
+import io from "socket.io-client";
 import axios from "../../services/axios";
 
 export interface Buzzer {
@@ -22,6 +24,20 @@ const fetchBuzzerQueue = async (): Promise<Buzzer[]> => {
 };
 
 const useAllBuzzers = () => {
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    const socket = io("http://localhost:3000"); // Adjust URL as needed
+
+    socket.on("buzzersReset", () => {
+      queryClient.invalidateQueries({ queryKey: ["buzzer-queue"] }); // Refresh data
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [queryClient]);
+
   return useQuery<Buzzer[], Error>({
     queryKey: ["buzzer-queue"],
     queryFn: fetchBuzzerQueue,

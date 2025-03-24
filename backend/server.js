@@ -1,5 +1,25 @@
 const express = require('express');
+const http = require("http");
+const { Server } = require("socket.io");
+
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+        origin: "*", // Adjust this to match your frontend's origin
+    },
+});
+
+io.on("connection", (socket) => {
+    console.log("A user connected:", socket.id);
+
+    socket.on("disconnect", () => {
+        console.log("A user disconnected:", socket.id);
+    });
+});
+
+global.io = io; // Make io globally accessible
+
 const port = 3000;
 const db = require('./models')
 const buzzerRouter = require("./routes/buzzer.route")
@@ -38,7 +58,7 @@ app.use("/api/question", questionRouter)
 app.use("/api/buzzer", buzzerRouter)
 db.sequelize.sync().then(() => {
 
-    app.listen(port, (req, res) => {
+    server.listen(port, (req, res) => {
         console.log(`Server is running on port ${port}`);
     })
 }).catch((err) => {

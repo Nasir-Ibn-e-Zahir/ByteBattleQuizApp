@@ -67,10 +67,10 @@ function MainScreen() {
   };
 
   // Play sound using HTML5 Audio (if needed)
-  const playSound = (soundFile: string) => {
-    const audio = new Audio(soundFile);
-    audio.play();
-  };
+  // const playSound = (soundFile: string) => {
+  //   const audio = new Audio(soundFile);
+  //   audio.play();
+  // };
 
   // Display confetti celebration effect for correct answers
   const displayCelebration = () => {
@@ -214,6 +214,7 @@ function MainScreen() {
           maxW="auto"
           bg="white"
           p={6}
+          mb="50px"
           borderRadius="xl"
           boxShadow="md"
           mx={{ base: 0, md: 6 }}

@@ -32,11 +32,13 @@ exports.deleteAllBuzzers = async (req, res) => {
     try {
         db.BuzzerPress.destroy({
             where: {},
-            turncate: true,
+            truncate: true,
+        });
 
-        })
-        res.status(200).json({ message: "Buzzers reset" })
+        global.io.emit("buzzersReset"); // Notify all clients
+        return res.status(200).json({ message: "All buzzers deleted successfully." });
     } catch (error) {
-        res.status(500).json({ error: 'Internal server error' });
+        console.error("Failed to delete all buzzers:", error);
+        return res.status(500).json({ error: "Failed to delete all buzzers." });
     }
-}
+};
